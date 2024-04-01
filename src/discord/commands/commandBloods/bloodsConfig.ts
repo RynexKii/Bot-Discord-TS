@@ -27,7 +27,7 @@ new Command({
         const subCommandGroup = interaction.options.getSubcommandGroup();
 
         switch (subCommandGroup) {
-            case "staff": {
+            case "bloods": {
                 const subCommand = interaction.options.getSubcommand();
 
                 switch (subCommand) {
