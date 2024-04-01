@@ -10,3 +10,5 @@ firebase.json
 *.development.json
 
 README.md
+
+localdatabase.sqlite
