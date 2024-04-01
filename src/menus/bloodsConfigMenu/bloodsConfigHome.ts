@@ -9,6 +9,7 @@ export function bloodsHomeMenu(getChannelDB: any) {
             label: "Inicio",
             style: ButtonStyle.Secondary,
             emoji: "<:home:1224341744531804210>",
+            disabled: true,
         }),
 
         new ButtonBuilder({
