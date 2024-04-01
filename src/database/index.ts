@@ -1,12 +1,12 @@
 import { QuickDB } from "quick.db";
-import { GuildData } from "./interfaces/GuildData.js";
-import { MemberData } from "./interfaces/MemberData.js";
+import { MemberBloods } from "./interfaces/MemberBloods.js";
+import { ChannelBloodsIgnored } from "./interfaces/ChannelBloodsIgnored.js";
 
-const filePath = rootTo("localdb.sqlite");
+const filePath = rootTo("localdatabase.sqlite");
 
-const db = {
-    guilds: new QuickDB<GuildData>({ filePath, table: "guilds" }),
-    members: new QuickDB<MemberData>({ filePath, table: "members" })
+const database = {
+    memberBloods: new QuickDB<MemberBloods>({ filePath, table: "MemberBloods" }),
+    channelBloodsIgnored: new QuickDB<ChannelBloodsIgnored>({ filePath, table: "ChannelBloodsIgnored" }),
 };
 
-export { db };
+export { database };
