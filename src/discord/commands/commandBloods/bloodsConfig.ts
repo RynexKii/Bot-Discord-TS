@@ -32,7 +32,7 @@ new Command({
 
                 switch (subCommand) {
                     case "configurações": {
-                        const getChannelDB = await database.channelBloodsIgnored.get(interaction.guildId);
+                        const getChannelDB = await database.channelBloodsIgnored.get("GuildConfig");
 
                         await interaction.reply(bloodsHomeMenu(getChannelDB));
                         break;
