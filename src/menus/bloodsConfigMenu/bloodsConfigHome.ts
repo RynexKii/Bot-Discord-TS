@@ -13,17 +13,24 @@ export function bloodsHomeMenu(getChannelDB: any) {
         }),
 
         new ButtonBuilder({
-            customId: `button/bloods/configurações/adicionar`,
+            customId: `button/bloods/configurações/adicionar/canal`,
             label: "Adicionar",
             style: ButtonStyle.Success,
-            emoji: "<:add:1212567044428533760>",
+            emoji: "<:add:1225995605558431786>",
         }),
 
         new ButtonBuilder({
-            customId: `button/bloods/configurações/remover`,
+            customId: `button/bloods/configurações/remover/canal`,
             label: "Remover",
             style: ButtonStyle.Danger,
-            emoji: "<:remove:1212567045695213629>",
+            emoji: "<:remove:1226004959540150372>",
+        }),
+
+        new ButtonBuilder({
+            customId: `button/bloods/configurações/set/guild`,
+            label: "Adicionar Servidor",
+            style: ButtonStyle.Primary,
+            emoji: "<:guild:1226005983541592084>",
         })
     );
 
