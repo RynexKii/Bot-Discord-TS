@@ -36,7 +36,10 @@ export function embedWalletRank(userId: string, membersRank: any[] | undefined, 
         textRank = "* [ERRO] Não foi possível encontrar nenhum usuário no banco de dados.";
     }
 
-    const embedWalletRank = new EmbedBuilder().setDescription(textRank).setColor("DarkGold");
+    const embedWalletRank = new EmbedBuilder()
+        .setAuthor({ name: "Top 5 Bloods", iconURL: "https://i.imgur.com/h0S883Y.png" })
+        .setDescription(textRank)
+        .setColor("DarkGold");
 
     return { content: `<@${userId}>`, embeds: [embedWalletRank], components: [rowButton] };
 }
