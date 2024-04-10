@@ -1,6 +1,6 @@
+import { embedWalletShopActiveMember } from "#functions";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle } from "discord.js";
-import { embedWalletShopActiveMember } from "functions/MessageEmbeds/BloodsMessageEmbeds/EmbedWalletActiveMember.js";
 
 export function walletShopActiveMember(userId: string) {
     const rowButton = createRow(

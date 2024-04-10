@@ -1,7 +1,7 @@
 import { Component } from "#base";
 import { contentNotInteractCommand } from "#functions";
+import { bloodsWalletShopMenu } from "#menus";
 import { ComponentType } from "discord.js";
-import { bloodsWalletShopMenu } from "menus/bloodsMenus/bloodsWalletMenu/MenuShop.js";
 
 new Component({
     customId: "button/bloods/wallet/shop",

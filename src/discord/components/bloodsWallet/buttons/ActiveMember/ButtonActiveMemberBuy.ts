@@ -1,8 +1,8 @@
 import { Component } from "#base";
 import { database } from "#database";
 import { contentAlreadyRole, contentInsufficientBloods, contentLogPublic, contentLogStaff, contentNotInteractCommand } from "#functions";
+import { walletShopActiveMemberBuy } from "#menus";
 import { ComponentType } from "discord.js";
-import { walletShopActiveMemberBuy } from "menus/bloodsMenus/bloodsWalletMenu/menuItensShop/MenuAtiveMemberBuy.js";
 
 // Botão Membro Ativo 3 Dias
 new Component({

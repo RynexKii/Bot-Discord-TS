@@ -1,7 +1,7 @@
 import { Command } from "#base";
 import { database } from "#database";
+import { bloodsWalletMenu } from "#menus";
 import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
-import { bloodsWalletMenu } from "menus/bloodsMenus/bloodsWalletMenu/MenuHome.js";
 
 new Command({
     name: "bloods",
