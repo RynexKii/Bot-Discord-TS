@@ -1,7 +1,7 @@
 import { createEmbed } from "@magicyan/discord";
 import { EmbedBuilder } from "discord.js";
 
-// ---------- Variáveis Mensagens Embed ----------
+//* ---------- Variáveis Mensagens Embed ----------
 
 // Mensagem do Botão adicionar canal
 export const embedAddButton = createEmbed({
@@ -15,7 +15,7 @@ export const embedRemoveButton = createEmbed({
     color: "#ff0000",
 });
 
-// ---------- Funções Mensagens Embed ----------
+//* ---------- Funções Mensagens Embed ----------
 
 // Mensagem principal do comando
 export function embedBloodsConfig(channelsIdDB: any) {

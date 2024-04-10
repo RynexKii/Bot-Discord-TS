@@ -1,4 +1,4 @@
-// ---------- Variáveis Mensagens Content ----------
+//* ---------- Variáveis Mensagens Content ----------
 
 // Mensagem de quando não existe nenhum canal registrado no Banco de Dados
 export const contentNotAllChannels = "Ops... Não existe nenhum canal registrado no Banco de Dados para ser removido!";
@@ -9,7 +9,7 @@ export const contentAlreadyGuild = "Hey, antes de você tentar adicionar um novo
 // Mensagem do Botão de remover quando não existe um servidor configurado como Principal no Banco de Dados
 export const contentNotGuildRegistered = "Antes de utilizar a opção de remover, é necessário configurar um servidor no Banco de Dados.";
 
-// ---------- Funções Mensagens Embed ----------
+//* ---------- Funções Mensagens Embed ----------
 
 // Mensagem do botão principal de Adicionar quando o canal já está registrado no Banco de Dados
 export function contentAlreadyRegistered(channelId: string) {
