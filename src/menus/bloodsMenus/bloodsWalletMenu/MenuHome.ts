@@ -13,19 +13,10 @@ export function bloodsWalletMenu(userId: string, userName: string, userIcon: any
         }),
 
         new ButtonBuilder({
-            customId: "button/bloods/wallet/send",
-            label: "Transferir",
-            style: ButtonStyle.Secondary,
-            emoji: "<:send:1226234465798324385>",
-            disabled: true,
-        }),
-
-        new ButtonBuilder({
             customId: "button/bloods/wallet/shop",
             label: "Loja",
             style: ButtonStyle.Secondary,
             emoji: "<:shop:1226234464389173388>",
-            disabled: true,
         }),
 
         new ButtonBuilder({
