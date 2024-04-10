@@ -2,6 +2,17 @@ import { EmbedBuilder, inlineCode } from "discord.js";
 
 //* ---------- Variáveis Mensagens Embed ----------
 
+export const embedWalletShop = new EmbedBuilder()
+    .setAuthor({ name: "Loja do Servidor", iconURL: "https://i.imgur.com/0xGj9i0.png" })
+    .setDescription(
+        `Troque seus Bloods por itens exclusivos em nossa loja e destaque-se ainda mais em nossa comunidade!
+
+* Membro Ativo: Compre um cargo exclusivo do servidor
+* Canal Personalizado: Em breve!
+    `
+    )
+    .setColor("Random");
+
 //* ---------- Funções Mensagens Embed ----------
 
 // Embed principal da Wallet
@@ -25,6 +36,7 @@ export function embedWallet(userName: string, userIcon: any, userBloods: any, us
         .setColor("Random");
 }
 
+// Embed do Botão de Rank
 export function embedWalletRank(userId: string, membersRank: any[] | undefined, rowButton: any) {
     let textRank = "";
 
@@ -43,3 +55,4 @@ export function embedWalletRank(userId: string, membersRank: any[] | undefined, 
 
     return { content: `<@${userId}>`, embeds: [embedWalletRank], components: [rowButton] };
 }
+
