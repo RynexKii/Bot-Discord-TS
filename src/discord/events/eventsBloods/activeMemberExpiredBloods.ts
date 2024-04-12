@@ -12,9 +12,11 @@ new Event({
             const guildId = await database.channelBloodsIgnored.get<string[]>("GuildConfig.guildId");
 
             //! Integrar mais pra frente com o Banco de Dados
+            //? TROCAR
             const activeMemberRoleId = "ROLEID";
 
             //! Integrar mais pra frente com o Banco de Dados
+            //? TROCAR
             const getChannelLogStaff = client.channels.cache.get("CHANNELID");
 
             if (guildId) {
@@ -35,7 +37,10 @@ new Event({
                         // Pega o timestamp que esta armazenado na database do usuário
                         const getTimestampMember = await database.activeMemberDuration.get<number>(`${userId}.timestamp`);
 
-                        if (getTimestampMember && getTimestampMember < getTimestampToday) {
+                        if (!getTimestampMember) {
+                            // Remove o cargo do usuário
+                            client.guilds.cache.get(guildId[0])?.members.cache.get(userId)?.roles.remove(activeMemberRoleId);
+                        } else if (getTimestampMember < getTimestampToday) {
                             // Remove o cargo do usuário
                             client.guilds.cache.get(guildId[0])?.members.cache.get(userId)?.roles.remove(activeMemberRoleId);
 
