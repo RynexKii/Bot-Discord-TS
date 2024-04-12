@@ -24,12 +24,15 @@ new Component({
         const getTimestamp3Day = Math.round(+new Date() / 1000) + 3 * 24 * 60 * 60;
 
         //! Integrar mais pra frente com o Banco de Dados
+        //? TROCAR
         const getRoleActiveMember = "ROLEID";
 
         //! Integrar mais pra frente com o Banco de Dados
+        //? TROCAR
         const getChannelLogStaff = interaction.guild.channels.cache.get("CHANNELID");
 
         //! Integrar mais pra frente com o Banco de Dados
+        //? TROCAR
         const getChannelCongratulationsPublic = interaction.guild.channels.cache.get("CHANNELID");
 
         // Verifica se o usuário já possui o cargo de Membro Ativo pelo Banco de Dados
@@ -37,8 +40,8 @@ new Component({
             return await interaction.reply({ content: contentAlreadyRole(getRoleActiveMember, getTimestampUserDB), ephemeral: true });
 
         // Verifica se o usuário não possiu o valor necessário para comprar o cargo
-        if (getBloodsUserDB && getBloodsUserDB < 600)
-            return await interaction.reply({ content: contentInsufficientBloods(3, 600, getBloodsUserDB), ephemeral: true });
+        if (getBloodsUserDB === undefined || (getBloodsUserDB && getBloodsUserDB < 600) || getBloodsUserDB === 0)
+            return await interaction.reply({ content: contentInsufficientBloods(3, 600, getBloodsUserDB ?? 0), ephemeral: true });
 
         //* Logs da Staff e Public
 
@@ -87,12 +90,15 @@ new Component({
         const getTimestamp7Day = Math.round(+new Date() / 1000) + 7 * 24 * 60 * 60;
 
         //! Integrar mais pra frente com o Banco de Dados
+        //? TROCAR
         const getRoleActiveMember = "ROLEID";
 
         //! Integrar mais pra frente com o Banco de Dados
+        //? TROCAR
         const getChannelLogStaff = interaction.guild.channels.cache.get("CHANNELID");
 
         //! Integrar mais pra frente com o Banco de Dados
+        //? TROCAR
         const getChannelCongratulationsPublic = interaction.guild.channels.cache.get("CHANNELID");
 
         // Verifica se o usuário já possui o cargo de Membro Ativo pelo Banco de Dados
@@ -100,8 +106,8 @@ new Component({
             return await interaction.reply({ content: contentAlreadyRole(getRoleActiveMember, getTimestampUserDB), ephemeral: true });
 
         // Verifica se o usuário não possiu o valor necessário para comprar o cargo
-        if (getBloodsUserDB && getBloodsUserDB < 1330)
-            return await interaction.reply({ content: contentInsufficientBloods(7, 1330, getBloodsUserDB), ephemeral: true });
+        if (getBloodsUserDB === undefined || (getBloodsUserDB && getBloodsUserDB < 1330) || getBloodsUserDB === 0)
+            return await interaction.reply({ content: contentInsufficientBloods(7, 1330, getBloodsUserDB ?? 0), ephemeral: true });
 
         //* Logs da Staff e Public
 
@@ -150,12 +156,15 @@ new Component({
         const getTimestamp30Day = Math.round(+new Date() / 1000) + 30 * 24 * 60 * 60;
 
         //! Integrar mais pra frente com o Banco de Dados
+        //? TROCAR
         const getRoleActiveMember = "ROLEID";
 
         //! Integrar mais pra frente com o Banco de Dados
+        //? TROCAR
         const getChannelLogStaff = interaction.guild.channels.cache.get("CHANNELID");
 
         //! Integrar mais pra frente com o Banco de Dados
+        //? TROCAR
         const getChannelCongratulationsPublic = interaction.guild.channels.cache.get("CHANNELID");
 
         // Verifica se o usuário já possui o cargo de Membro Ativo pelo Banco de Dados
@@ -163,8 +172,8 @@ new Component({
             return await interaction.reply({ content: contentAlreadyRole(getRoleActiveMember, getTimestampUserDB), ephemeral: true });
 
         // Verifica se o usuário não possiu o valor necessário para comprar o cargo
-        if (getBloodsUserDB && getBloodsUserDB < 5100)
-            return await interaction.reply({ content: contentInsufficientBloods(30, 5100, getBloodsUserDB), ephemeral: true });
+        if (getBloodsUserDB === undefined || (getBloodsUserDB && getBloodsUserDB < 5100) || getBloodsUserDB === 0)
+            return await interaction.reply({ content: contentInsufficientBloods(30, 5100, getBloodsUserDB ?? 0), ephemeral: true });
 
         //* Logs da Staff e Public
 
