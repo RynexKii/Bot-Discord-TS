@@ -16,6 +16,15 @@ new Command({
         },
     ],
     async run(interaction) {
+        const sendCommandsChannel = "CHANNELID"; //? ID do canal que o comando poderá ser enviado
+
+        // Verifica se o canal que foi executado o comando é o mesmo que está no sendCommandsChannel
+        if (interaction.channelId !== sendCommandsChannel)
+            return await interaction.reply({
+                content: `Por favor, utilize apenas o canal <#${sendCommandsChannel}> para enviar este comando!`,
+                ephemeral: true,
+            });
+
         const getSubcommand = interaction.options.getSubcommand();
         switch (getSubcommand) {
             case "carteira": {
@@ -42,5 +51,6 @@ new Command({
                 break;
             }
         }
+        return;
     },
 });
