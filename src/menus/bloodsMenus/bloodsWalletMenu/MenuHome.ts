@@ -5,6 +5,13 @@ import { ButtonBuilder, ButtonStyle } from "discord.js";
 export function bloodsWalletMenu(userId: string, userName: string, userIcon: any, userBloods: any, userRank: any, allUsersRank: any) {
     const rowButton = createRow(
         new ButtonBuilder({
+            customId: "button/bloods/wallet/home",
+            label: "Atualizar",
+            style: ButtonStyle.Secondary,
+            emoji: "<:refresh:1228505777837178900>",
+        }),
+
+        new ButtonBuilder({
             customId: "button/bloods/wallet/bank",
             label: "Banco",
             style: ButtonStyle.Secondary,
