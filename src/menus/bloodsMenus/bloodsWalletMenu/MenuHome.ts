@@ -7,7 +7,7 @@ export function bloodsWalletMenu(userId: string, userName: string, userIcon: any
         new ButtonBuilder({
             customId: "button/bloods/wallet/home",
             label: "Atualizar",
-            style: ButtonStyle.Secondary,
+            style: ButtonStyle.Success,
             emoji: "<:refresh:1228505777837178900>",
         }),
 
