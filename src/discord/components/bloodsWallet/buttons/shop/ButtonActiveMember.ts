@@ -1,10 +1,27 @@
 import { Component } from "#base";
 import { database } from "#database";
 import { contentAlreadyRole, contentInsufficientBloods, contentLogPublic, contentLogStaff, contentNotInteractCommand } from "#functions";
-import { walletShopActiveMemberBuy } from "#menus";
+import { walletShopActiveMember, walletShopActiveMemberBuy } from "#menus";
 import { ComponentType } from "discord.js";
 
-// Botão Membro Ativo 3 Dias
+
+//* Menu Principal Membro Ativo
+new Component({
+    customId: "button/bloods/wallet/shop/activemember",
+    type: ComponentType.Button,
+    cache: "cached",
+    async run(interaction) {
+        // Verifica se o usuário que está interagindo com o botão é o mesmo que enviou a mensagem
+        if (interaction.user.id !== interaction.message.interaction?.user.id)
+            return await interaction.reply({ content: contentNotInteractCommand, ephemeral: true });
+
+        const userId = interaction.user.id;
+
+        return await interaction.update(walletShopActiveMember(userId));
+    },
+});
+
+//* Botão Membro Ativo 3 Dias
 new Component({
     customId: "button/bloods/wallet/shop/activemember/3day",
     type: ComponentType.Button,
@@ -70,7 +87,7 @@ new Component({
     },
 });
 
-// Botão Membro Ativo 7 Dias
+//* Botão Membro Ativo 7 Dias
 new Component({
     customId: "button/bloods/wallet/shop/activemember/7day",
     type: ComponentType.Button,
@@ -136,7 +153,7 @@ new Component({
     },
 });
 
-// Botão Membro Ativo 30 Dias
+//* Botão Membro Ativo 30 Dias
 new Component({
     customId: "button/bloods/wallet/shop/activemember/30day",
     type: ComponentType.Button,
