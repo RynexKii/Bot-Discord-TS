@@ -5,7 +5,7 @@ import { ButtonBuilder, ButtonStyle } from "discord.js";
 export function walletShopActiveMemberBuy(userId: string, day: number, roleActiveMember: string) {
     const rowButton = createRow(
         new ButtonBuilder({
-            custom_id: "button/bloods/wallet/home",
+            customId: "button/bloods/wallet/home",
             label: "Inicio",
             style: ButtonStyle.Secondary,
             emoji: "<:home:1224341744531804210>",

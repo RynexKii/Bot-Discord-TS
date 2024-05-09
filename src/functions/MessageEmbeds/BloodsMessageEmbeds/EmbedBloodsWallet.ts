@@ -15,7 +15,6 @@ export const embedWalletShop = new EmbedBuilder()
 
 //* ---------- Funções Mensagens Embed ----------
 
-// Embed principal da Wallet
 export function embedWallet(userName: string, userIcon: any, userBloods: any, userRank: any, allUsersRank: any) {
     let rank;
     if (userRank) {
@@ -36,7 +35,6 @@ export function embedWallet(userName: string, userIcon: any, userBloods: any, us
         .setColor("Random");
 }
 
-// Embed do Botão de Rank
 export function embedWalletRank(userId: string, membersRank: any[] | undefined, rowButton: any) {
     let textRank = "";
 
@@ -55,4 +53,3 @@ export function embedWalletRank(userId: string, membersRank: any[] | undefined, 
 
     return { content: `<@${userId}>`, embeds: [embedWalletRank], components: [rowButton] };
 }
-

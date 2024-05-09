@@ -19,7 +19,7 @@ new Component({
     async run(interaction) {
         const rowButtonHome = createRow(
             new ButtonBuilder({
-                customId: `button/bloods/configurações/inicio`,
+                customId: "button/bloods/configurações/inicio",
                 label: "Inicio",
                 style: ButtonStyle.Secondary,
                 emoji: "<:home:1224341744531804210>",
@@ -82,7 +82,7 @@ new Component({
     async run(interaction) {
         const rowButtonHome = createRow(
             new ButtonBuilder({
-                customId: `button/bloods/configurações/inicio`,
+                customId: "button/bloods/configurações/inicio",
                 label: "Inicio",
                 style: ButtonStyle.Secondary,
                 emoji: "<:home:1224341744531804210>",

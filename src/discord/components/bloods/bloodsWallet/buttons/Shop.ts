@@ -3,6 +3,7 @@ import { contentNotInteractCommand } from "#functions";
 import { bloodsWalletShopMenu } from "#menus";
 import { ComponentType } from "discord.js";
 
+// Botão para acessar o Shop
 new Component({
     customId: "button/bloods/wallet/shop",
     type: ComponentType.Button,

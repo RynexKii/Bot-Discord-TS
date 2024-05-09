@@ -11,7 +11,7 @@ new Event({
 
         const { channelId } = client;
 
-        const getAllChannelsDB = await database.channelBloodsIgnored.get<string[]>(`GuildConfig.allChannels`);
+        const getAllChannelsDB = await database.channelBloodsIgnored.get<string[]>("GuildConfig.allChannels");
 
         // Verificação dos canais que não concederão Bloods
         if (getAllChannelsDB) {

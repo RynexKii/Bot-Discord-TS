@@ -4,6 +4,7 @@ import { contentNotInteractCommand } from "#functions";
 import { bloodsWalletMenu } from "#menus";
 import { ComponentType } from "discord.js";
 
+// Botão de inicio da Wallet
 new Component({
     customId: "button/bloods/wallet/home",
     type: ComponentType.Button,

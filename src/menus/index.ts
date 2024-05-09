@@ -1,7 +1,11 @@
-export * from "./bloodsMenus/bloodsConfigMenu/MenuHome.js";
+//* Bloods Config Menu
+export * from "./bloodsMenus/bloodsConfigMenu/Home.js";
 
-export * from "./bloodsMenus/bloodsWalletMenu/MenuHome.js";
-export * from "./bloodsMenus/bloodsWalletMenu/MenuShop.js";
+//* Bloods Wallet Menu
+export * from "./bloodsMenus/bloodsWalletMenu/Home.js";
+export * from "./bloodsMenus/bloodsWalletMenu/Shop.js";
 
-export * from "./bloodsMenus/bloodsWalletMenu/menuItensShop/MenuActiveMember.js";
-export * from "./bloodsMenus/bloodsWalletMenu/menuItensShop/MenuAtiveMemberBuy.js";
+//* Wallet Itens Shop Menu
+export * from "./bloodsMenus/bloodsWalletMenu/menuItensShop/ActiveMember.js";
+export * from "./bloodsMenus/bloodsWalletMenu/menuItensShop/AtiveMemberBuy.js";
+export * from "./bloodsMenus/bloodsWalletMenu/menuItensShop/CustomChannel.js";

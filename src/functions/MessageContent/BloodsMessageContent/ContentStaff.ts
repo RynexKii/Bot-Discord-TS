@@ -11,17 +11,14 @@ export const contentNotGuildRegistered = "Antes de utilizar a opção de remover
 
 //* ---------- Funções Mensagens Embed ----------
 
-// Mensagem do botão principal de Adicionar quando o canal já está registrado no Banco de Dados
 export function contentAlreadyRegistered(channelId: string) {
     return `Ops... O canal <#${channelId}> já foi registrado no banco de dados!`;
 }
 
-// Mensagem do botão principal de Remover quando o canal não está registrado no Banco de Dados
 export function contentNotChannel(channelId: string) {
     return `Ops... O canal <#${channelId}> não está registrado no Banco de Dados!`;
 }
 
-// Mensagem caso o botão de remover for usado em outro servidor do principal
 export function contentIncorrectGuild(guildName: string, guildId: string) {
     return `Essa opção deve ser utilizada no servidor principal que o sistema foi registrado.
 

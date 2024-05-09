@@ -12,11 +12,11 @@ new Event({
             const guildId = await database.channelBloodsIgnored.get<string[]>("GuildConfig.guildId");
 
             //! Integrar mais pra frente com o Banco de Dados
-            //? TROCAR
+            // TODO: Colocar o ID do cargo de Membro Ativo
             const activeMemberRoleId = "ROLEID";
 
             //! Integrar mais pra frente com o Banco de Dados
-            //? TROCAR
+            // TODO: Colocar o ID do canal de Logs da Staff
             const getChannelLogStaff = client.channels.cache.get("CHANNELID");
 
             if (guildId) {

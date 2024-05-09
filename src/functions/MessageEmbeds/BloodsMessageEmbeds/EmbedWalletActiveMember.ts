@@ -2,12 +2,11 @@ import { EmbedBuilder, inlineCode } from "discord.js";
 
 //* ---------- Funções Mensagens Embed ----------
 
-// Embed Principal da loja de Membro Ativo
 export function embedWalletShopActiveMember() {
     return new EmbedBuilder()
         .setAuthor({ name: "Loja do Servidor", iconURL: "https://i.imgur.com/0xGj9i0.png" })
         .setDescription(
-            `O Cargo de Membro Ativo é uma assinatura especial que oferece uma série de vantagens exclusivas para os membros dedicados de nossa comunidade no Discord. Ao adquirir este cargo, você se torna parte de um grupo seleto de membros que desfrutam de privilégios especiais e uma atmosfera ainda mais envolvente.`
+            "O Cargo de Membro Ativo é uma assinatura especial que oferece uma série de vantagens exclusivas para os membros dedicados de nossa comunidade no Discord. Ao adquirir este cargo, você se torna parte de um grupo seleto de membros que desfrutam de privilégios especiais e uma atmosfera ainda mais envolvente."
         )
         .addFields(
             {
@@ -39,13 +38,12 @@ export function embedWalletShopActiveMember() {
             },
             {
                 name: "\u200B",
-                value: `Ao clicar no botão abaixo, sua compra será efetuada instantaneamente.`,
+                value: "Ao clicar no botão abaixo, sua compra será efetuada instantaneamente.",
             }
         )
         .setColor("DarkGold");
 }
 
-// Embed quando é efetuada uma compra na loja de Membro Ativo
 export function embedWalletShopAtiveMemberBuy(day: number, roleActiveMember: string) {
     return new EmbedBuilder()
         .setDescription(

@@ -2,30 +2,30 @@ import { embedWalletShopActiveMember } from "#functions";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle } from "discord.js";
 
-export function walletShopActiveMember(userId: string) {
+export function walletShopCustomChannel(userId: string) {
     const rowButton = createRow(
         new ButtonBuilder({
-            custom_id: "button/bloods/wallet/home",
+            customId: "button/bloods/wallet/home",
             label: "Inicio",
             style: ButtonStyle.Secondary,
             emoji: "<:home:1224341744531804210>",
         }),
 
         new ButtonBuilder({
-            custom_id: "button/bloods/wallet/shop/activemember/3day",
+            customId: "button/bloods/wallet/shop/customchannel/3day",
             label: " (600)",
             style: ButtonStyle.Secondary,
             emoji: "<:3_:1227600147496566825>",
         }),
 
         new ButtonBuilder({
-            custom_id: "button/bloods/wallet/shop/activemember/7day",
+            customId: "button/bloods/wallet/shop/customchannel/7day",
             label: " (1330) -5%",
             style: ButtonStyle.Secondary,
             emoji: "<:7_:1227600143583416361>",
         }),
         new ButtonBuilder({
-            custom_id: "button/bloods/wallet/shop/activemember/30day",
+            customId: "button/bloods/wallet/shop/customchannel/30day",
             label: " (5100) -15%",
             style: ButtonStyle.Secondary,
             emoji: "<:30:1227600145479368714>",

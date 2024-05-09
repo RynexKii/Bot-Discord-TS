@@ -1,4 +1,5 @@
 import { Command } from "#base";
+import { CommandTimer } from "#classes";
 import { database } from "#database";
 import { bloodsWalletMenu } from "#menus";
 import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
@@ -16,7 +17,13 @@ new Command({
         },
     ],
     async run(interaction) {
-        const sendCommandsChannel = "CHANNELID"; //? ID do canal que o comando poderá ser enviado
+        const userId = interaction.user.id;
+
+        const test = new CommandTimer(userId, "Test");
+        
+        test.setTimer();
+
+        const sendCommandsChannel = "1113654401786183783"; //? ID do canal que o comando poderá ser enviado
 
         // Verifica se o canal que foi executado o comando é o mesmo que está no sendCommandsChannel
         if (interaction.channelId !== sendCommandsChannel)

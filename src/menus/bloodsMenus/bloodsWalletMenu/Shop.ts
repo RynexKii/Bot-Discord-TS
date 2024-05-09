@@ -5,25 +5,24 @@ import { ButtonBuilder, ButtonStyle } from "discord.js";
 export function bloodsWalletShopMenu(userId: string) {
     const rowButton = createRow(
         new ButtonBuilder({
-            custom_id: "button/bloods/wallet/home",
+            customId: "button/bloods/wallet/home",
             label: "Inicio",
             style: ButtonStyle.Secondary,
             emoji: "<:home:1224341744531804210>",
         }),
 
         new ButtonBuilder({
-            custom_id: "button/bloods/wallet/shop/activemember",
+            customId: "button/bloods/wallet/shop/activemember",
             label: "Membro Ativo",
             style: ButtonStyle.Secondary,
             emoji: "<:activemember:1227386523373146142>",
         }),
 
         new ButtonBuilder({
-            custom_id: "button/bloods/wallet/shop/customchannel",
+            customId: "button/bloods/wallet/shop/customchannel",
             label: "Canal Personalizado",
             style: ButtonStyle.Secondary,
             emoji: "<:channel:1227386524690157568>",
-            disabled: true,
         })
     );
 

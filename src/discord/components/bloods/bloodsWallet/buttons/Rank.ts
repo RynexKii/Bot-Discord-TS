@@ -4,6 +4,7 @@ import { contentNotInteractCommand, embedWalletRank } from "#functions";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle, ComponentType } from "discord.js";
 
+// Botão para acessar o Top Rank
 new Component({
     customId: "button/bloods/wallet/ranks",
     type: ComponentType.Button,
@@ -15,7 +16,7 @@ new Component({
 
         const rowButton = createRow(
             new ButtonBuilder({
-                custom_id: "button/bloods/wallet/home",
+                customId: "button/bloods/wallet/home",
                 label: "Inicio",
                 style: ButtonStyle.Secondary,
                 emoji: "<:home:1224341744531804210>",

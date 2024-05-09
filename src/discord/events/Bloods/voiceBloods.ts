@@ -7,17 +7,17 @@ new Event({
     event: "ready",
     async run(client) {
         async function addBloodsVoiceChannel() {
-            let allMembersGuild: string[] = [];
+            const allMembersGuild: string[] = [];
 
             const getGuildIdDB = await database.channelBloodsIgnored.get<string[]>("GuildConfig.guildId");
 
-            const getAllChannelsDB = await database.channelBloodsIgnored.get<string[]>(`GuildConfig.allChannels`);
+            const getAllChannelsDB = await database.channelBloodsIgnored.get<string[]>("GuildConfig.allChannels");
 
             // Verifica se existe um guildId registrado no Banco de Dados
             if (!getGuildIdDB) return;
 
             // De todas as Guilds que o bot está, pega a guild que está registrada no Banco de Dados
-            const guild = await client.guilds.cache.get(getGuildIdDB[0]);
+            const guild = client.guilds.cache.get(getGuildIdDB[0]);
 
             // Verifica se existe um valor na variável guild
             if (!guild) return;
@@ -29,7 +29,7 @@ new Event({
             });
 
             for (let index = 0; index < allMembersGuild.length; index++) {
-                let membersId = allMembersGuild[index];
+                const membersId = allMembersGuild[index];
 
                 // Passando por todos os membros ele pega os ID's dos canais que tem membros conectados ( Também pega os que não estão conectado returnando null )
                 const getMemberVoiceId = (await guild.members.fetch(membersId)).voice.channelId;

@@ -12,21 +12,21 @@ new Component({
     async run(interaction) {
         const rowButton = createRow(
             new ButtonBuilder({
-                customId: `button/bloods/configurações/inicio`,
+                customId: "button/bloods/configurações/inicio",
                 label: "Inicio",
                 style: ButtonStyle.Secondary,
                 emoji: "<:home:1224341744531804210>",
             }),
 
             new ButtonBuilder({
-                customId: `button/bloods/configurações/adicionar/guild`,
+                customId: "button/bloods/configurações/adicionar/guild",
                 label: "Adicionar",
                 style: ButtonStyle.Success,
                 emoji: "<:add:1225995605558431786>",
             }),
 
             new ButtonBuilder({
-                customId: `button/bloods/configurações/remover/guild`,
+                customId: "button/bloods/configurações/remover/guild",
                 label: "Remover",
                 style: ButtonStyle.Danger,
                 emoji: "<:remove:1226004959540150372>",
@@ -49,7 +49,7 @@ new Component({
     async run(interaction) {
         const rowButtonHome = createRow(
             new ButtonBuilder({
-                customId: `button/bloods/configurações/inicio`,
+                customId: "button/bloods/configurações/inicio",
                 label: "Inicio",
                 style: ButtonStyle.Secondary,
                 emoji: "<:home:1224341744531804210>",
@@ -65,9 +65,9 @@ new Component({
         // Verifica se existe um servidor já registrado no banco de dados
         if (getGuildDB && getGuildDB.length > 0) return await interaction.reply({ content: contentAlreadyGuild, ephemeral: true });
 
-        await database.channelBloodsIgnored.push(`GuildConfig.guildName`, guildName);
+        await database.channelBloodsIgnored.push("GuildConfig.guildName", guildName);
 
-        await database.channelBloodsIgnored.push(`GuildConfig.guildId`, guildId);
+        await database.channelBloodsIgnored.push("GuildConfig.guildId", guildId);
 
         return await interaction.update({ embeds: [embedGuildAdd(guildName)], components: [rowButtonHome] });
     },
@@ -81,7 +81,7 @@ new Component({
     async run(interaction) {
         const rowButtonHome = createRow(
             new ButtonBuilder({
-                customId: `button/bloods/configurações/inicio`,
+                customId: "button/bloods/configurações/inicio",
                 label: "Inicio",
                 style: ButtonStyle.Secondary,
                 emoji: "<:home:1224341744531804210>",
