@@ -1,3 +1,3 @@
 export interface CommandTimer {
-    Timestamp?: number;
+    Timestamp: number;
 }
