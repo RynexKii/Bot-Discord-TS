@@ -6,6 +6,7 @@ new Command({
     name: "reset",
     description: "Resetar todos os cooldowns dos comandos da Nea",
     dmPermission: false,
+    defaultMemberPermissions: ["Administrator"],
     type: ApplicationCommandType.ChatInput,
     async run(interaction) {
         await database.commandTimer.deleteAll();
