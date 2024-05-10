@@ -2,25 +2,26 @@ import { Command } from "#base";
 import { CommandTimer } from "#classes";
 import { database } from "#database";
 import { bloodsWalletMenu } from "#menus";
-import { ApplicationCommandType, time } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
 
 new Command({
     name: "bloods",
-    description: "Veja o seu saldo de Bloods, loja e ranks",
+    description: "Sistema de Bloods",
     dmPermission: false,
     type: ApplicationCommandType.ChatInput,
+    options: [
+        {
+            name: "carteira",
+            description: "Veja o seu saldo de Bloods, opção de transferencia, loja e ranks",
+            type: ApplicationCommandOptionType.Subcommand,
+        },
+    ],
     async run(interaction) {
         const userId = interaction.user.id;
 
-        const commandCooldown = new CommandTimer(userId, "Wallet");
-
-        commandCooldown.setTimer(300);
-
-        if (await commandCooldown.verifyTimer())
-            return await interaction.reply({
-                content: `Você pode usar esse comando novamente ${time(await commandCooldown.getTimer(), "R")}`,
-                ephemeral: true,
-            });
+        const test = new CommandTimer(userId, "Test");
+        
+        test.setTimer();
 
         const sendCommandsChannel = "1113654401786183783"; //? ID do canal que o comando poderá ser enviado
 
@@ -31,18 +32,32 @@ new Command({
                 ephemeral: true,
             });
 
-        const userName = interaction.user.displayName;
-        const userIcon = interaction.user.avatarURL();
-        const userBloods = await database.memberBloods.get(`${userId}.bloods`);
-        const GetUserRank = await database.memberBloodsRank.get<any[]>("MembersRank");
-        let userRank = null;
+        const getSubcommand = interaction.options.getSubcommand();
+        switch (getSubcommand) {
+            case "carteira": {
+                const userId = interaction.user.id;
 
-        GetUserRank?.forEach((element) => {
-            if (element.userId === userId) {
-                userRank = element.userRank;
+                const userName = interaction.user.displayName;
+
+                const userIcon = interaction.user.avatarURL();
+
+                const userBloods = await database.memberBloods.get(`${userId}.bloods`);
+
+                const GetUserRank = await database.memberBloodsRank.get<any[]>("MembersRank");
+
+                let userRank = null;
+
+                GetUserRank?.forEach((element) => {
+                    if (element.userId === userId) {
+                        userRank = element.userRank;
+                    }
+                });
+
+                await interaction.reply(bloodsWalletMenu(userId, userName, userIcon, userBloods, userRank, GetUserRank?.length));
+
+                break;
             }
-        });
-
-        return await interaction.reply(bloodsWalletMenu(userId, userName, userIcon, userBloods, userRank, GetUserRank?.length));
+        }
+        return;
     },
 });
