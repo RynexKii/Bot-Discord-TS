@@ -48,7 +48,7 @@ export function embedWalletRank(userId: string, membersRank: any[] | undefined, 
 
     const embedWalletRank = new EmbedBuilder()
         .setAuthor({ name: "Top 5 Bloods", iconURL: "https://i.imgur.com/h0S883Y.png" })
-        .setDescription(textRank)
+        .setDescription(`${textRank} \nO Rank é atualizado a cada intervalo de 5 minutos.`)
         .setColor("DarkGold");
 
     return { content: `<@${userId}>`, embeds: [embedWalletRank], components: [rowButton] };

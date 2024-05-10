@@ -27,7 +27,7 @@ new Component({
 
         const getMembersRank = await database.memberBloodsRank.get<any[]>("MembersRank");
 
-        const getFirstFiveMembers = getMembersRank?.slice(0, 5);
+        const getFirstFiveMembers = getMembersRank?.slice(0, 10);
 
         return await interaction.update(embedWalletRank(userId, getFirstFiveMembers, rowButton));
     },
