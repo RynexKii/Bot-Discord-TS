@@ -18,7 +18,7 @@ new Command({
 
         if (await commandCooldown.verifyTimer())
             return await interaction.reply({
-                content: `Você pode usar esse comando novamente ${time(await commandCooldown.getTimer(), "R")}`,
+                content: `Você poderá usar esse comando novamente ${time(await commandCooldown.getTimer(), "R")}`,
                 ephemeral: true,
             });
 
