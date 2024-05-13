@@ -9,7 +9,7 @@ export class CommandTimer {
         this.commandId = commandId;
     }
 
-    async setTimer(seconds: number) {
+    async setTimer(seconds: number): Promise<void> {
         const timestamp = +new Date();
         const userTimestampDB = await database.commandTimer.get<number>(`${this.userId}.${this.commandId}`);
 
@@ -22,7 +22,7 @@ export class CommandTimer {
         }
     }
 
-    async getTimer() {
+    async getTimer(): Promise<Date> {
         const userTimestampDB = await database.commandTimer.get<number>(`${this.userId}.${this.commandId}`);
         const dateNow = new Date();
 
@@ -31,7 +31,7 @@ export class CommandTimer {
         return dateNow;
     }
 
-    async verifyTimer() {
+    async verifyTimer(): Promise<boolean> {
         const timestamp = +new Date();
         const userTimestampDB = await database.commandTimer.get<number>(`${this.userId}.${this.commandId}`);
 
