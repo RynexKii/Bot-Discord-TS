@@ -48,7 +48,7 @@ new Event({
                                 // Retorna quantos usuário tem no canal
                                 const membersVoiceSize = (await guild.members.fetch(membersId)).voice.channel?.members.size;
 
-                                if (membersVoiceSize === 1) {
+                                if (membersVoiceSize == 1) {
                                     if (memberHasBoosted) {
                                         await database.memberBloods.add(`${membersId}.bloods`, randomNumber(1, 2));
                                     } else {
