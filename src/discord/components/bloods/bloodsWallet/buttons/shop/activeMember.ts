@@ -4,6 +4,10 @@ import { contentAlreadyRole, contentInsufficientBloods, contentLogPublic, conten
 import { walletShopActiveMember, walletShopActiveMemberBuy } from "#menus";
 import { ComponentType } from "discord.js";
 
+//? TROCAR
+const roleActiveMember = "ROLEID";
+const channelLogStaff = "CHANNELID";
+const channelCongratulationsPublic = "CHANNELID";
 
 //* Menu Principal Membro Ativo
 new Component({
@@ -41,16 +45,13 @@ new Component({
         const getTimestamp3Day = Math.round(+new Date() / 1000) + 3 * 24 * 60 * 60;
 
         //! Integrar mais pra frente com o Banco de Dados
-        //? TROCAR
-        const getRoleActiveMember = "ROLEID";
+        const getRoleActiveMember = roleActiveMember;
 
         //! Integrar mais pra frente com o Banco de Dados
-        //? TROCAR
-        const getChannelLogStaff = interaction.guild.channels.cache.get("CHANNELID");
+        const getChannelLogStaff = interaction.guild.channels.cache.get(channelLogStaff);
 
         //! Integrar mais pra frente com o Banco de Dados
-        //? TROCAR
-        const getChannelCongratulationsPublic = interaction.guild.channels.cache.get("CHANNELID");
+        const getChannelCongratulationsPublic = interaction.guild.channels.cache.get(channelCongratulationsPublic);
 
         // Verifica se o usuário já possui o cargo de Membro Ativo pelo Banco de Dados
         if (getTimestampUserDB)
@@ -107,16 +108,13 @@ new Component({
         const getTimestamp7Day = Math.round(+new Date() / 1000) + 7 * 24 * 60 * 60;
 
         //! Integrar mais pra frente com o Banco de Dados
-        //? TROCAR
-        const getRoleActiveMember = "ROLEID";
+        const getRoleActiveMember = roleActiveMember;
 
         //! Integrar mais pra frente com o Banco de Dados
-        //? TROCAR
-        const getChannelLogStaff = interaction.guild.channels.cache.get("CHANNELID");
+        const getChannelLogStaff = interaction.guild.channels.cache.get(channelLogStaff);
 
         //! Integrar mais pra frente com o Banco de Dados
-        //? TROCAR
-        const getChannelCongratulationsPublic = interaction.guild.channels.cache.get("CHANNELID");
+        const getChannelCongratulationsPublic = interaction.guild.channels.cache.get(channelCongratulationsPublic);
 
         // Verifica se o usuário já possui o cargo de Membro Ativo pelo Banco de Dados
         if (getTimestampUserDB)
@@ -173,16 +171,13 @@ new Component({
         const getTimestamp30Day = Math.round(+new Date() / 1000) + 30 * 24 * 60 * 60;
 
         //! Integrar mais pra frente com o Banco de Dados
-        //? TROCAR
-        const getRoleActiveMember = "ROLEID";
+        const getRoleActiveMember = roleActiveMember;
 
         //! Integrar mais pra frente com o Banco de Dados
-        //? TROCAR
-        const getChannelLogStaff = interaction.guild.channels.cache.get("CHANNELID");
+        const getChannelLogStaff = interaction.guild.channels.cache.get(channelLogStaff);
 
         //! Integrar mais pra frente com o Banco de Dados
-        //? TROCAR
-        const getChannelCongratulationsPublic = interaction.guild.channels.cache.get("CHANNELID");
+        const getChannelCongratulationsPublic = interaction.guild.channels.cache.get(channelCongratulationsPublic);
 
         // Verifica se o usuário já possui o cargo de Membro Ativo pelo Banco de Dados
         if (getTimestampUserDB)
