@@ -12,9 +12,9 @@
   <p>Todos os sistemas feitos até o momento:</p>
   
   - [x] Economia com Bloods
-  - [x] Cargos por Bloods
+  - [x] Loja
   - [x] Top Ranks
-  - [x] Diversão
+  - [x] Coinflip
 </div>
 
 <!--Pré-requisitos-->
@@ -38,13 +38,13 @@
   - Clone o Projeto
 
     ```bash
-      git clone https://github.com/RynexKii/Bot-Discord-TS.git
+    git clone https://github.com/RynexKii/Bot-Discord-TS.git
     ```
 
   - Após instalar, digite no seu terminal
 
     ```bash
-      npm install
+    npm install
     ```
   - Renomeie o arquivo `.env.example` para `.env` e coloque o token do seu bot nele e salve!
   - Inicie o bot com `npm run dev` no terminal.
