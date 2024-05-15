@@ -2,6 +2,10 @@ import { Event } from "#base";
 import { database } from "#database";
 import { contentLogStaffRemove } from "#functions";
 
+//? TROCAR
+const roleActiveMember = "ROLEID";
+const channelLogStaff = "CHANNELID";
+
 new Event({
     name: "Remove os Membros Ativos que já ultrapassou a data",
     event: "ready",
@@ -13,11 +17,11 @@ new Event({
 
             //! Integrar mais pra frente com o Banco de Dados
             // TODO: Colocar o ID do cargo de Membro Ativo
-            const activeMemberRoleId = "ROLEID";
+            const activeMemberRoleId = roleActiveMember;
 
             //! Integrar mais pra frente com o Banco de Dados
             // TODO: Colocar o ID do canal de Logs da Staff
-            const getChannelLogStaff = client.channels.cache.get("CHANNELID");
+            const getChannelLogStaff = client.channels.cache.get(channelLogStaff);
 
             if (guildId) {
                 // Pega os usuário que estão com o cargo (activeMemberRoleId)

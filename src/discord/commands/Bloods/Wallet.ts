@@ -14,7 +14,7 @@ new Command({
 
         const commandCooldown = new CommandTimer(userId, "Wallet");
 
-        commandCooldown.setTimer(300);
+        commandCooldown.setTimer(120);
 
         if (await commandCooldown.verifyTimer())
             return await interaction.reply({
@@ -22,7 +22,8 @@ new Command({
                 ephemeral: true,
             });
 
-        const sendCommandsChannel = "1113654401786183783"; //? ID do canal que o comando poderá ser enviado
+        //? TROCAR
+        const sendCommandsChannel = "CHANNELID"; //? ID do canal que o comando poderá ser enviado
 
         // Verifica se o canal que foi executado o comando é o mesmo que está no sendCommandsChannel
         if (interaction.channelId !== sendCommandsChannel)
