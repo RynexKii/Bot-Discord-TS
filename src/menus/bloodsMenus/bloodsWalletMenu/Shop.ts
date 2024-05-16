@@ -23,6 +23,7 @@ export function bloodsWalletShopMenu(userId: string) {
             label: "Canal Personalizado",
             style: ButtonStyle.Secondary,
             emoji: "<:channel:1227386524690157568>",
+            disabled: true,
         })
     );
 

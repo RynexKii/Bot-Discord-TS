@@ -12,3 +12,7 @@ export * from "./MessageContent/BloodsMessageContent/ContentWalletActiveMember.j
 
 //* Coinflip
 export * from "./MessageContent/CoinflipMessageContent/ContentCoinflip.js";
+
+//* Transfer
+export * from "./MessageEmbeds/BloodsMessageEmbeds/EmbedTransfer.js";
+export * from "./MessageContent/BloodsMessageContent/ContentTransfer.js";
