@@ -42,9 +42,9 @@ new Event({
         // Chamando a função assim que iniciar o bot
         setMembers();
 
-        // Depois chamando a função em um loop de 5 minutos para ser atualizado a cada 5 minutos
+        // Depois chamando a função em um loop de 1 minutos para ser atualizado a cada 1 minutos
         setInterval(() => {
             setMembers();
-        }, 300 * 1000);
+        }, 60 * 1000);
     },
 });

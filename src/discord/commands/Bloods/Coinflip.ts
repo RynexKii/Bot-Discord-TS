@@ -42,7 +42,7 @@ new Command({
 
         const commandCooldown = new CommandTimer(userId, "Coinflip");
 
-        commandCooldown.setTimer(30);
+        commandCooldown.setTimer(10);
 
         if (await commandCooldown.verifyTimer())
             return await interaction.reply({
