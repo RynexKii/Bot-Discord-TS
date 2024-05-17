@@ -2,7 +2,16 @@ import { embedWallet } from "#functions";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle } from "discord.js";
 
-export function bloodsWalletMenu(userId: string, userName: string, userIcon: any, userBloods: any, userRank: any, allUsersRank: any) {
+export function bloodsWalletMenu(
+    userId: string,
+    userName: string,
+    userIcon: any,
+    userBloods: any,
+    userAboutMe: string,
+    userFame: number,
+    userRank: any,
+    allUsersRank: any
+) {
     const rowButton = createRow(
         new ButtonBuilder({
             customId: "button/bloods/wallet/home",
@@ -12,11 +21,10 @@ export function bloodsWalletMenu(userId: string, userName: string, userIcon: any
         }),
 
         new ButtonBuilder({
-            customId: "button/bloods/wallet/bank",
-            label: "Banco",
+            customId: "button/bloods/wallet/aboutme",
+            label: "Sobre Mim",
             style: ButtonStyle.Secondary,
-            emoji: "<:bank:1226234467186905170>",
-            disabled: true,
+            emoji: "<:sobre:1240774961493184542>",
         }),
 
         new ButtonBuilder({
@@ -34,5 +42,9 @@ export function bloodsWalletMenu(userId: string, userName: string, userIcon: any
         })
     );
 
-    return { content: `<@${userId}>`, embeds: [embedWallet(userName, userIcon, userBloods, userRank, allUsersRank)], components: [rowButton] };
+    return {
+        content: `<@${userId}>`,
+        embeds: [embedWallet(userName, userIcon, userBloods, userAboutMe, userFame, userRank, allUsersRank)],
+        components: [rowButton],
+    };
 }

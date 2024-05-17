@@ -16,3 +16,9 @@ export * from "./MessageContent/CoinflipMessageContent/ContentCoinflip.js";
 //* Transfer
 export * from "./MessageEmbeds/BloodsMessageEmbeds/EmbedTransfer.js";
 export * from "./MessageContent/BloodsMessageContent/ContentTransfer.js";
+
+//* About Me
+export * from "./MessageContent/AboutMeContent/AboutMe.js";
+
+//* Fame
+export * from "./MessageEmbeds/BloodsMessageEmbeds/EmbedFame.js";

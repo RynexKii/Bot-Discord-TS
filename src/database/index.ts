@@ -6,11 +6,13 @@ import { ActiveMemberDuration } from "./interfaces/ActiveMemberDuration.js";
 import { MemberBloodsLost } from "./interfaces/MemberBloodsLost.js";
 import { CommandTimer } from "#classes";
 import { Coinflip } from "./interfaces/Coinflip.js";
+import { MemberProfile } from "./interfaces/MemberProfile.js";
 
 const filePath = rootTo("localdatabase.sqlite");
 
 const database = {
     memberBloods: new QuickDB<MemberBloods>({ filePath, table: "MemberBloods" }),
+    memberProfile: new QuickDB<MemberProfile>({ filePath, table: "MemberProfile" }),
     memberBloodsLost: new QuickDB<MemberBloodsLost>({ filePath, table: "MemberBloodsLost" }),
     channelBloodsIgnored: new QuickDB<ChannelBloodsIgnored>({ filePath, table: "ChannelBloodsIgnored" }),
     memberBloodsRank: new QuickDB<MemberBloodsRank>({ filePath, table: "MemberBloodsRank" }),

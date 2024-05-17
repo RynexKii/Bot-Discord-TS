@@ -1,6 +1,6 @@
 import { Component } from "#base";
 import { database } from "#database";
-import { contentNotInteractCommand } from "#functions";
+import { contentNotInteractCommand, defaultContentAboutMe } from "#functions";
 import { bloodsWalletMenu } from "#menus";
 import { ComponentType } from "discord.js";
 
@@ -24,6 +24,10 @@ new Component({
 
         const GetUserRank = await database.memberBloodsRank.get<any[]>("MembersRank");
 
+        const userAboutMeDB = await database.memberProfile.get<string>(`${userId}.aboutMe`);
+
+        const userFameDB = await database.memberProfile.get<number>(`${userId}.fame`);
+
         let userRank = null;
 
         GetUserRank?.forEach((element) => {
@@ -32,6 +36,17 @@ new Component({
             }
         });
 
-        return await interaction.update(bloodsWalletMenu(userId, userName, userIcon, userBloods, userRank, GetUserRank?.length));
+        return await interaction.update(
+            bloodsWalletMenu(
+                userId,
+                userName,
+                userIcon,
+                userBloods,
+                userAboutMeDB ?? defaultContentAboutMe(userId),
+                userFameDB ?? 0,
+                userRank,
+                GetUserRank?.length
+            )
+        );
     },
 });
