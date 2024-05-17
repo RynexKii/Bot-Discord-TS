@@ -1,6 +1,7 @@
 import { Command } from "#base";
 import { CommandTimer } from "#classes";
 import { database } from "#database";
+import { defaultContentAboutMe } from "#functions";
 import { bloodsWalletMenu } from "#menus";
 import { ApplicationCommandType, time } from "discord.js";
 
@@ -35,7 +36,10 @@ new Command({
         const userName = interaction.user.displayName;
         const userIcon = interaction.user.avatarURL();
         const userBloods = await database.memberBloods.get(`${userId}.bloods`);
+        const userAboutMeDB = await database.memberProfile.get<string>(`${userId}.aboutMe`);
         const GetUserRank = await database.memberBloodsRank.get<any[]>("MembersRank");
+        const userFameDB = await database.memberProfile.get<number>(`${userId}.fame`);
+
         let userRank = null;
 
         GetUserRank?.forEach((element) => {
@@ -44,6 +48,17 @@ new Command({
             }
         });
 
-        return await interaction.reply(bloodsWalletMenu(userId, userName, userIcon, userBloods, userRank, GetUserRank?.length));
+        return await interaction.reply(
+            bloodsWalletMenu(
+                userId,
+                userName,
+                userIcon,
+                userBloods,
+                userAboutMeDB ?? defaultContentAboutMe(userId),
+                userFameDB ?? 0,
+                userRank,
+                GetUserRank?.length
+            )
+        );
     },
 });
