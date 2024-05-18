@@ -1,8 +1,9 @@
 import { Command } from "#base";
 import { CommandTimer } from "#classes";
 import { database } from "#database";
-import { embedFame } from "#functions";
-import { ApplicationCommandOptionType, ApplicationCommandType, time } from "discord.js";
+import { contentChannelSendCommand, contentFameBot, contentFameYourself, cooldownMessage, embedFameSend } from "#functions";
+import { channelSendCommandsId } from "#tools";
+import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
 
 new Command({
     name: "fama",
@@ -21,23 +22,27 @@ new Command({
         const userId = interaction.user.id;
         const userReceiverFameId = interaction.options.getUser("usuário", true).id;
 
-        if (interaction.options.getUser("usuário", true).bot)
-            return await interaction.reply({ content: "Você não pode dar fama a um bot", ephemeral: true });
+        // Verifica se o canal que foi executado o comando é o mesmo que está no sendCommandsChannel
+        if (interaction.channelId !== channelSendCommandsId)
+            return await interaction.reply({ content: contentChannelSendCommand(channelSendCommandsId), ephemeral: true });
+        // ---
 
-        if (userId == userReceiverFameId) return await interaction.reply({ content: "Você não pode dar fama a si mesmo", ephemeral: true });
+        // Verifica se o usuário que enviou não está enviando para um bot
+        if (interaction.options.getUser("usuário", true).bot) return await interaction.reply({ content: contentFameBot(userReceiverFameId), ephemeral: true });
 
-        const commandCooldown = new CommandTimer(userId, "Fame");
+        // Verifica se o usuário que enviou não está enviando para ele mesmo
+        if (userId == userReceiverFameId) return await interaction.reply({ content: contentFameYourself, ephemeral: true });
 
-        commandCooldown.setTimer(86400);
+        // Colocando cooldown no comando de 24 horas (86400 segundos)
+        const cooldownCommand = new CommandTimer(userId, "Fame");
 
-        if (await commandCooldown.verifyTimer())
-            return await interaction.reply({
-                content: `Você poderá usar esse comando novamente ${time(await commandCooldown.getTimer(), "R")}`,
-                ephemeral: true,
-            });
+        cooldownCommand.setTimer(86400);
+
+        if (await cooldownCommand.verifyTimer()) return await interaction.reply(cooldownMessage(await cooldownCommand.getTimer()));
+        // ---
 
         await database.memberProfile.add(`${userReceiverFameId}.fame`, 1);
 
-        return await interaction.reply({ embeds: [embedFame(userId, userReceiverFameId)] });
+        return await interaction.reply({ embeds: [embedFameSend(userId, userReceiverFameId)] });
     },
 });
