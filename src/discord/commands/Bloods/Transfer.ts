@@ -6,7 +6,7 @@ import { ApplicationCommandOptionType, ApplicationCommandType, time } from "disc
 
 new Command({
     name: "transferir",
-    description: "Transfira Bloods para outro usuário",
+    description: "❰ Economia ❱ Transfira Bloods para outro usuário",
     dmPermission: false,
     type: ApplicationCommandType.ChatInput,
     options: [

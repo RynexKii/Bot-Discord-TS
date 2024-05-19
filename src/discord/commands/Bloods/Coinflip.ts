@@ -7,7 +7,7 @@ import { ApplicationCommandOptionType, ApplicationCommandType, ButtonBuilder, Bu
 
 new Command({
     name: "coinflip",
-    description: "Aposte Bloods em um Cara ou Coroa.",
+    description: "❰ Economia ❱ Aposte Bloods em um Cara ou Coroa.",
     dmPermission: false,
     type: ApplicationCommandType.ChatInput,
     options: [

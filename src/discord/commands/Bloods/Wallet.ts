@@ -7,7 +7,7 @@ import { ApplicationCommandType, time } from "discord.js";
 
 new Command({
     name: "bloods",
-    description: "Veja o seu saldo de Bloods, loja e ranks",
+    description: "❰ Social ❱ Veja o seu saldo de Bloods, loja e ranks",
     dmPermission: false,
     type: ApplicationCommandType.ChatInput,
     async run(interaction) {

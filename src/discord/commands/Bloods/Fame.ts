@@ -7,7 +7,7 @@ import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js
 
 new Command({
     name: "fama",
-    description: "De um ponto de fama para o seu ídolo",
+    description: "❰ Diversão ❱ De um ponto de fama para o seu ídolo",
     dmPermission: false,
     type: ApplicationCommandType.ChatInput,
     options: [
