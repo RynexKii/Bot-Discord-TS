@@ -11,8 +11,7 @@ new Component({
     cache: "cached",
     async run(interaction) {
         // Verifica se o usuário que está interagindo com o botão é o mesmo que enviou a mensagem
-        if (interaction.user.id !== interaction.message.interaction?.user.id)
-            return await interaction.reply({ content: contentNotInteractCommand, ephemeral: true });
+        if (interaction.user.id !== interaction.message.interaction?.user.id) return await interaction.reply({ content: contentNotInteractCommand, ephemeral: true });
 
         const userId = interaction.user.id;
 
@@ -37,16 +36,7 @@ new Component({
         });
 
         return await interaction.update(
-            bloodsWalletMenu(
-                userId,
-                userName,
-                userIcon,
-                userBloods,
-                userAboutMeDB ?? defaultContentAboutMe(userId),
-                userFameDB ?? 0,
-                userRank,
-                GetUserRank?.length
-            )
+            bloodsWalletMenu(userName, userIcon, userBloods, userAboutMeDB ?? defaultContentAboutMe(userId), userFameDB ?? 0, userRank, GetUserRank?.length)
         );
     },
 });

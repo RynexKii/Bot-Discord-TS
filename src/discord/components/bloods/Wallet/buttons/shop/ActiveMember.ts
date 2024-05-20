@@ -2,12 +2,8 @@ import { Component } from "#base";
 import { database } from "#database";
 import { contentAlreadyRole, contentInsufficientBloods, contentLogPublic, contentLogStaff, contentNotInteractCommand } from "#functions";
 import { walletShopActiveMember, walletShopActiveMemberBuy } from "#menus";
+import { channelCongratulationsPublic, channelLogStaff, roleActiveMember } from "#tools";
 import { ComponentType } from "discord.js";
-
-//? TROCAR
-const roleActiveMember = "ROLEID";
-const channelLogStaff = "CHANNELID";
-const channelCongratulationsPublic = "CHANNELID";
 
 //* Menu Principal Membro Ativo
 new Component({
