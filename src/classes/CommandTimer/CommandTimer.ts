@@ -9,17 +9,15 @@ export class CommandTimer {
         this.commandId = commandId;
     }
 
-    async setTimer(seconds: number): Promise<void> {
+    async setTimer(seconds: number) {
         const timestamp = +new Date();
         const userTimestampDB = await database.commandTimer.get<number>(`${this.userId}.${this.commandId}`);
 
-        if (userTimestampDB && timestamp > userTimestampDB) {
-            await database.commandTimer.delete(this.userId);
+        if (!userTimestampDB) return await database.commandTimer.set(`${this.userId}.${this.commandId}`, seconds * 1000 + timestamp);
 
-            await database.commandTimer.set(`${this.userId}.${this.commandId}`, seconds * 1000 + timestamp);
-        } else if (!userTimestampDB) {
-            await database.commandTimer.set(`${this.userId}.${this.commandId}`, seconds * 1000 + timestamp);
-        }
+        if (timestamp > userTimestampDB) return await database.commandTimer.set(`${this.userId}.${this.commandId}`, seconds * 1000 + timestamp);
+
+        return;
     }
 
     async getTimer(): Promise<Date> {
@@ -35,7 +33,10 @@ export class CommandTimer {
         const timestamp = +new Date();
         const userTimestampDB = await database.commandTimer.get<number>(`${this.userId}.${this.commandId}`);
 
-        if (userTimestampDB && timestamp < userTimestampDB) return true;
-        else return false;
+        if (!userTimestampDB) return false;
+
+        if (timestamp < userTimestampDB) return true;
+
+        return false;
     }
 }
