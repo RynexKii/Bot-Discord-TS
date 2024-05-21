@@ -12,8 +12,8 @@ new Modal({
         const { fields } = interaction;
         const modalValueAbountMe = fields.getTextInputValue("aboutMe");
         const userName = interaction.user.displayName;
-        const userIcon = interaction.user.avatarURL();
-        const userBloods = await database.memberBloods.get(`${userId}.bloods`);
+        const userIcon = interaction.user.displayAvatarURL();
+        const userBloods = await database.memberBloods.get<number>(`${userId}.bloods`);
         const userFame = await database.memberProfile.get<number>(`${userId}.fame`);
         const GetUserRank = await database.memberBloodsRank.get<any[]>("MembersRank");
 
@@ -60,7 +60,7 @@ new Modal({
         await interaction.deferUpdate();
 
         await interaction.editReply({
-            embeds: [embedWallet(userName, userIcon, userBloods, modalValueAbountMe, userFame ?? 0, userRank, GetUserRank?.length)],
+            embeds: [embedWallet(userName, userIcon, userBloods ?? 0, modalValueAbountMe, userFame ?? 0, userRank, GetUserRank?.length)],
             components: [rowButton],
         });
     },

@@ -1,64 +1,92 @@
 import { Command } from "#base";
 import { CommandTimer } from "#classes";
 import { database } from "#database";
-import { defaultContentAboutMe } from "#functions";
-import { bloodsWalletMenu } from "#menus";
-import { ApplicationCommandType, time } from "discord.js";
+import { contentChannelSendCommand, contentProfileBot, cooldownMessage, defaultContentAboutMe } from "#functions";
+import { bloodsWalletMenu, bloodsWalletMenuUsers } from "#menus";
+import { channelSendCommandsId } from "#tools";
+import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
 
 new Command({
-    name: "bloods",
-    description: "❰ Social ❱ Veja o seu saldo de Bloods, loja e ranks",
+    name: "perfil",
+    description: "❰ Social ❱ Veja o seu perfil ou de algum outro usuário",
     dmPermission: false,
     type: ApplicationCommandType.ChatInput,
+    options: [
+        {
+            name: "usuário",
+            description: "Menção ou ID do usuário",
+            type: ApplicationCommandOptionType.User,
+        },
+    ],
     async run(interaction) {
         const userId = interaction.user.id;
-
-        const commandCooldown = new CommandTimer(userId, "Wallet");
-
-        commandCooldown.setTimer(120);
-
-        if (await commandCooldown.verifyTimer())
-            return await interaction.reply({
-                content: `Você poderá usar esse comando novamente ${time(await commandCooldown.getTimer(), "R")}`,
-                ephemeral: true,
-            });
-
-        //? TROCAR
-        const sendCommandsChannel = "CHANNELID"; //? ID do canal que o comando poderá ser enviado
+        const userReceiverId = interaction.options.getUser("usuário")?.id;
+        const userBotId = interaction.options.getUser("usuário", true).id;
 
         // Verifica se o canal que foi executado o comando é o mesmo que está no sendCommandsChannel
-        if (interaction.channelId !== sendCommandsChannel)
-            return await interaction.reply({
-                content: `Por favor, utilize apenas o canal <#${sendCommandsChannel}> para enviar este comando!`,
-                ephemeral: true,
+        if (interaction.channelId !== channelSendCommandsId)
+            return await interaction.reply({ content: contentChannelSendCommand(channelSendCommandsId), ephemeral: true });
+        // ---
+
+        // Verifica se o usuário que foi recebido no userReceiverId é bot
+        if (interaction.options.getUser("usuário")?.bot) return await interaction.reply({ content: contentProfileBot(userBotId), ephemeral: true });
+
+        // Colocando cooldown no comando de 1 minuto
+        const cooldownCommand = new CommandTimer(userId, "Wallet");
+
+        cooldownCommand.setTimer(30);
+
+        if (await cooldownCommand.verifyTimer()) return await interaction.reply(cooldownMessage(await cooldownCommand.getTimer()));
+        // ---
+
+        async function showWallet(showUserId: string) {
+            const userName = (await interaction.guild.members.fetch(showUserId)).displayName;
+            const userIcon = (await interaction.guild.members.fetch(showUserId)).displayAvatarURL();
+            const userBloods = await database.memberBloods.get<number>(`${showUserId}.bloods`);
+            const userAboutMeDB = await database.memberProfile.get<string>(`${showUserId}.aboutMe`);
+            const GetUserRank = await database.memberBloodsRank.get<any[]>("MembersRank");
+            const userFameDB = await database.memberProfile.get<number>(`${showUserId}.fame`);
+
+            let userRank = null;
+
+            GetUserRank?.forEach((element) => {
+                if (element.userId === showUserId) {
+                    userRank = element.userRank;
+                }
             });
 
-        const userName = interaction.user.displayName;
-        const userIcon = interaction.user.avatarURL();
-        const userBloods = await database.memberBloods.get(`${userId}.bloods`);
-        const userAboutMeDB = await database.memberProfile.get<string>(`${userId}.aboutMe`);
-        const GetUserRank = await database.memberBloodsRank.get<any[]>("MembersRank");
-        const userFameDB = await database.memberProfile.get<number>(`${userId}.fame`);
-
-        let userRank = null;
-
-        GetUserRank?.forEach((element) => {
-            if (element.userId === userId) {
-                userRank = element.userRank;
+            if (!userReceiverId || userId == userReceiverId) {
+                return await interaction.reply(
+                    bloodsWalletMenu(
+                        userName,
+                        userIcon,
+                        userBloods ?? 0,
+                        userAboutMeDB ?? defaultContentAboutMe(showUserId),
+                        userFameDB ?? 0,
+                        userRank,
+                        GetUserRank?.length
+                    )
+                );
+            } else {
+                return await interaction.reply(
+                    bloodsWalletMenuUsers(
+                        userName,
+                        userIcon,
+                        userBloods ?? 0,
+                        userAboutMeDB ?? defaultContentAboutMe(showUserId),
+                        userFameDB ?? 0,
+                        userRank,
+                        GetUserRank?.length
+                    )
+                );
             }
-        });
+        }
 
-        return await interaction.reply(
-            bloodsWalletMenu(
-                userId,
-                userName,
-                userIcon,
-                userBloods,
-                userAboutMeDB ?? defaultContentAboutMe(userId),
-                userFameDB ?? 0,
-                userRank,
-                GetUserRank?.length
-            )
-        );
+        if (!userReceiverId) {
+            showWallet(userId);
+        } else {
+            showWallet(userReceiverId);
+        }
+        return;
     },
 });

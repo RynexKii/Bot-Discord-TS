@@ -1,8 +1,9 @@
 import { Command } from "#base";
 import { CommandTimer } from "#classes";
 import { database } from "#database";
-import { transferBloods, transferBloodsForBot, transferBloodsForYou, transferBloodsLow } from "#functions";
-import { ApplicationCommandOptionType, ApplicationCommandType, time } from "discord.js";
+import { contentChannelSendCommand, cooldownMessage, transferBloods, transferBloodsForBot, transferBloodsForYou, transferBloodsLow } from "#functions";
+import { channelSendCommandsId } from "#tools";
+import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
 
 new Command({
     name: "transferir",
@@ -21,32 +22,25 @@ new Command({
             description: "Insira a quantidade de Bloods que deseja transferir",
             type: ApplicationCommandOptionType.Number,
             minValue: 20,
-            maxValue: 1000,
+            maxValue: 1500,
             required: true,
         },
     ],
     async run(interaction) {
         const userId = interaction.user.id;
 
-        const commandCooldown = new CommandTimer(userId, "Transfer");
-
-        commandCooldown.setTimer(30);
-
-        if (await commandCooldown.verifyTimer())
-            return await interaction.reply({
-                content: `Você poderá usar esse comando novamente ${time(await commandCooldown.getTimer(), "R")}`,
-                ephemeral: true,
-            });
-
-        //? TROCAR
-        const sendCommandsChannel = "CHANNELID"; //? ID do canal que o comando poderá ser enviado
-
         // Verifica se o canal que foi executado o comando é o mesmo que está no sendCommandsChannel
-        if (interaction.channelId !== sendCommandsChannel)
-            return await interaction.reply({
-                content: `Por favor, utilize apenas o canal <#${sendCommandsChannel}> para enviar este comando!`,
-                ephemeral: true,
-            });
+        if (interaction.channelId !== channelSendCommandsId)
+            return await interaction.reply({ content: contentChannelSendCommand(channelSendCommandsId), ephemeral: true });
+        // ---
+
+        // Colocando cooldown no comando de 1 minuto
+        const cooldownCommand = new CommandTimer(userId, "Transfer");
+
+        cooldownCommand.setTimer(30);
+
+        if (await cooldownCommand.verifyTimer()) return await interaction.reply(cooldownMessage(await cooldownCommand.getTimer()));
+        // ---
 
         const userReceiverId = interaction.options.getUser("usuário", true).id;
         const valueTransfer = interaction.options.getNumber("valor", true);

@@ -1,10 +1,7 @@
 import { Event } from "#base";
 import { database } from "#database";
 import { contentLogStaffRemove } from "#functions";
-
-//? TROCAR
-const roleActiveMember = "ROLEID";
-const channelLogStaff = "CHANNELID";
+import { channelLogStaff, roleActiveMember } from "#tools";
 
 new Event({
     name: "Remove os Membros Ativos que já ultrapassou a data",
@@ -25,9 +22,7 @@ new Event({
 
             if (guildId) {
                 // Pega os usuário que estão com o cargo (activeMemberRoleId)
-                const getMemberRole = (await client.guilds.cache.get(guildId[0])?.members.fetch())?.filter((m) =>
-                    m.roles.cache.has(activeMemberRoleId)
-                );
+                const getMemberRole = (await client.guilds.cache.get(guildId[0])?.members.fetch())?.filter((m) => m.roles.cache.has(activeMemberRoleId));
 
                 // Pega os ID's dos usuários e retorna um Array com os ID's
                 const getUsersId = getMemberRole?.map((user) => user.id);

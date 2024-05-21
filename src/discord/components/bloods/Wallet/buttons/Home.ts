@@ -17,9 +17,9 @@ new Component({
 
         const userName = interaction.user.displayName;
 
-        const userIcon = interaction.user.avatarURL();
+        const userIcon = interaction.user.displayAvatarURL();
 
-        const userBloods = await database.memberBloods.get(`${userId}.bloods`);
+        const userBloods = await database.memberBloods.get<number>(`${userId}.bloods`);
 
         const GetUserRank = await database.memberBloodsRank.get<any[]>("MembersRank");
 
@@ -36,7 +36,7 @@ new Component({
         });
 
         return await interaction.update(
-            bloodsWalletMenu(userName, userIcon, userBloods, userAboutMeDB ?? defaultContentAboutMe(userId), userFameDB ?? 0, userRank, GetUserRank?.length)
+            bloodsWalletMenu(userName, userIcon, userBloods ?? 0, userAboutMeDB ?? defaultContentAboutMe(userId), userFameDB ?? 0, userRank, GetUserRank?.length)
         );
     },
 });

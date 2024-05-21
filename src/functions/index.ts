@@ -1,3 +1,6 @@
+// WrapText Function
+export * from "./WrapText/WrapText.js";
+
 // Cooldown Commands Message
 export * from "./MessageCooldown/Cooldown.js";
 
@@ -9,8 +12,8 @@ export * from "./MessageEmbeds/BloodsMessageEmbeds/EmbedsStaff.js";
 export * from "./MessageContent/BloodsMessageContent/ContentStaff.js";
 
 // Bloods Wallet Message
-export * from "./MessageEmbeds/BloodsMessageEmbeds/EmbedBloodsWallet.js";
-export * from "./MessageContent/BloodsMessageContent/ContentBloodsWallet.js";
+export * from "./MessageWallet/EmbedWallet.js";
+export * from "./MessageWallet/ContentWallet.js";
 
 // Wallet Itens Message
 export * from "./MessageEmbeds/BloodsMessageEmbeds/EmbedWalletActiveMember.js";
@@ -29,3 +32,7 @@ export * from "./MessageProfile/MessageAboutMe/AboutMe.js";
 // Fame Message
 export * from "./MessageProfile/MessageFame/EmbedFame.js";
 export * from "./MessageProfile/MessageFame/ContentFame.js";
+
+// Daily Message
+export * from "./MessageProfile/MessageDaily/EmbedDaily.js";
+export * from "./MessageProfile/MessageDaily/ContentDaily.js";

@@ -1,9 +1,10 @@
 import { Command } from "#base";
 import { CommandTimer } from "#classes";
 import { database } from "#database";
-import { coinflipLowBloods, coinflipMessage } from "#functions";
+import { coinflipLowBloods, coinflipMessage, contentChannelSendCommand, cooldownMessage } from "#functions";
+import { channelSendCommandsId } from "#tools";
 import { createRow } from "@magicyan/discord";
-import { ApplicationCommandOptionType, ApplicationCommandType, ButtonBuilder, ButtonStyle, time } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationCommandType, ButtonBuilder, ButtonStyle } from "discord.js";
 
 new Command({
     name: "coinflip",
@@ -40,25 +41,18 @@ new Command({
     async run(interaction) {
         const userId = interaction.user.id;
 
-        const commandCooldown = new CommandTimer(userId, "Coinflip");
-
-        commandCooldown.setTimer(10);
-
-        if (await commandCooldown.verifyTimer())
-            return await interaction.reply({
-                content: `Você poderá usar esse comando novamente ${time(await commandCooldown.getTimer(), "R")}`,
-                ephemeral: true,
-            });
-
-        //? TROCAR
-        const sendCommandsChannel = "CHANNELID"; //? ID do canal que o comando poderá ser enviado
-
         // Verifica se o canal que foi executado o comando é o mesmo que está no sendCommandsChannel
-        if (interaction.channelId !== sendCommandsChannel)
-            return await interaction.reply({
-                content: `Por favor, utilize apenas o canal <#${sendCommandsChannel}> para enviar este comando!`,
-                ephemeral: true,
-            });
+        if (interaction.channelId !== channelSendCommandsId)
+            return await interaction.reply({ content: contentChannelSendCommand(channelSendCommandsId), ephemeral: true });
+        // ---
+
+        // Colocando cooldown no comando de 1 minuto
+        const cooldownCommand = new CommandTimer(userId, "Coinflip");
+
+        cooldownCommand.setTimer(30);
+
+        if (await cooldownCommand.verifyTimer()) return await interaction.reply(cooldownMessage(await cooldownCommand.getTimer()));
+        // ---
 
         const valueBet = interaction.options.getNumber("valor", true);
         const sideBet = interaction.options.getString("lado", true);
