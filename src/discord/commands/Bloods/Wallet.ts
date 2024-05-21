@@ -21,7 +21,7 @@ new Command({
     async run(interaction) {
         const userId = interaction.user.id;
         const userReceiverId = interaction.options.getUser("usuário")?.id;
-        const userBotId = interaction.options.getUser("usuário", true).id;
+        const userBotId = interaction.options.getUser("usuário")?.id;
 
         // Verifica se o canal que foi executado o comando é o mesmo que está no sendCommandsChannel
         if (interaction.channelId !== channelSendCommandsId)
@@ -29,7 +29,7 @@ new Command({
         // ---
 
         // Verifica se o usuário que foi recebido no userReceiverId é bot
-        if (interaction.options.getUser("usuário")?.bot) return await interaction.reply({ content: contentProfileBot(userBotId), ephemeral: true });
+        if (interaction.options.getUser("usuário")?.bot && userBotId) return await interaction.reply({ content: contentProfileBot(userBotId), ephemeral: true });
 
         // Colocando cooldown no comando de 1 minuto
         const cooldownCommand = new CommandTimer(userId, "Wallet");

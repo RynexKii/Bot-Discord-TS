@@ -50,7 +50,7 @@ export function embedWallet(
             { name: "\n", value: "\n" },
             { name: "Carteira", value: `${userBloods} Bloods 🩸`, inline: true },
             { name: "Fama", value: `${fame} ⭐️`, inline: true },
-            { name: "Rank", value: `${rank}ﾠ<:ranking:1226234468587540500>`, inline: true },
+            { name: "Rank", value: `${rank}ﾠ<:rank:1242560092281245746>`, inline: true },
             { name: "\n", value: "\n" }
         )
         .setColor("Random");
@@ -90,7 +90,7 @@ export function embedWalletUsers(
             { name: "\n", value: "\n" },
             { name: "Carteira", value: `${userBloods} Bloods 🩸`, inline: true },
             { name: "Fama", value: `${fame} ⭐️`, inline: true },
-            { name: "Rank", value: `${rank}ﾠ<:ranking:1226234468587540500>`, inline: true },
+            { name: "Rank", value: `${rank}ﾠ<:rank:1242560092281245746>`, inline: true },
             { name: "\n", value: "\n" }
         )
         .setFooter({ text: `Você está vendo o perfil de ${userName}`, iconURL: "https://images.emojiterra.com/twitter/v13.1/512px/1f440.png" })

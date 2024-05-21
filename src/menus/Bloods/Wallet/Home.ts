@@ -37,7 +37,7 @@ export function bloodsWalletMenu(
             customId: "button/bloods/wallet/ranks",
             label: "Ranks",
             style: ButtonStyle.Secondary,
-            emoji: "<:ranking:1226234468587540500>",
+            emoji: "<:rank:1242560092281245746>",
         })
     );
 
