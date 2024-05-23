@@ -4,7 +4,7 @@ import { ApplicationCommandType } from "discord.js";
 
 new Command({
     name: "reset",
-    description: "Resetar todos os cooldowns dos comandos da Nea",
+    description: "❰ Staff ❱ Resetar todos os cooldowns dos comandos da Nea",
     dmPermission: false,
     defaultMemberPermissions: ["Administrator"],
     type: ApplicationCommandType.ChatInput,
