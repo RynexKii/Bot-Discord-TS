@@ -20,7 +20,7 @@ export * from "./MessageEmbeds/BloodsMessageEmbeds/EmbedWalletActiveMember.js";
 export * from "./MessageContent/BloodsMessageContent/ContentWalletActiveMember.js";
 
 // Coinflip Message
-export * from "./MessageContent/CoinflipMessageContent/ContentCoinflip.js";
+export * from "./MessageCoinflip/ContentCoinflip.js";
 
 // Transfer Message
 export * from "./MessageEmbeds/BloodsMessageEmbeds/EmbedTransfer.js";
@@ -36,3 +36,6 @@ export * from "./MessageProfile/MessageFame/ContentFame.js";
 // Daily Message
 export * from "./MessageProfile/MessageDaily/EmbedDaily.js";
 export * from "./MessageProfile/MessageDaily/ContentDaily.js";
+
+// Staff Message
+export * from "./MessageStaff/ContentBloods.js";

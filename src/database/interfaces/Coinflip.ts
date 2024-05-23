@@ -1,5 +1,6 @@
 export interface Coinflip {
-    MessageId: string;
-    Side: string;
-    Value: number;
+    userSendId: string;
+    userReceivedId: string;
+    side: string;
+    value: number;
 }

@@ -34,7 +34,7 @@ new Command({
             return await interaction.reply({ content: contentChannelSendCommand(channelSendCommandsId), ephemeral: true });
         // ---
 
-        // Colocando cooldown no comando de 1 minuto
+        // Colocando cooldown no comando de 30 segundos
         const cooldownCommand = new CommandTimer(userId, "Transfer");
 
         cooldownCommand.setTimer(30);

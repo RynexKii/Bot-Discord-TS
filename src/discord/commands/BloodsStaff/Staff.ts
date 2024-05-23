@@ -1,10 +1,9 @@
 import { Command } from "#base";
 import { CommandTimer } from "#classes";
 import { database } from "#database";
-import { cooldownMessage } from "#functions";
+import { cooldownMessage, contentStaffAddBloods, contentStaffBot, contentStaffNoHaveBloods, contentStaffRemoveBloods } from "#functions";
 import { bloodsHomeMenu } from "#menus";
 import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
-import { contentStaffAddBloods, contentStaffBot, contentStaffNoHaveBloods, contentStaffRemoveBloods } from "functions/MessageStaff/ContentBloods.js";
 
 new Command({
     name: "staff",
@@ -67,8 +66,8 @@ new Command({
         const subCommandGroup = interaction.options.getSubcommandGroup();
         const userId = interaction.user.id;
 
-        // Colocando cooldown no comando de 1 minuto
-        const cooldownCommand = new CommandTimer(userId, "Wallet");
+        // Colocando cooldown no comando de 5 Segundos
+        const cooldownCommand = new CommandTimer(userId, "Staff");
 
         cooldownCommand.setTimer(5);
 

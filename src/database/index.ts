@@ -5,9 +5,8 @@ import { MemberBloodsRank } from "./interfaces/MemberBloodsRank.js";
 import { ActiveMemberDuration } from "./interfaces/ActiveMemberDuration.js";
 import { MemberBloodsLost } from "./interfaces/MemberBloodsLost.js";
 import { CommandTimer } from "#classes";
-import { Coinflip } from "./interfaces/Coinflip.js";
 import { MemberProfile } from "./interfaces/MemberProfile.js";
-
+import { Coinflip } from "./interfaces/Coinflip.js";
 const filePath = rootTo("localdatabase.sqlite");
 
 const database = {
