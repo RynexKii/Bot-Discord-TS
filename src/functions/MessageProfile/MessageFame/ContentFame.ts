@@ -1,4 +1,4 @@
-import { userMention } from "discord.js";
+import { time, userMention } from "discord.js";
 
 // ---------- Variáveis Mensagens Content ----------
 
@@ -8,4 +8,8 @@ export const contentFameYourself = "<:Claudette:1241523164115243108> Por mais qu
 
 export function contentFameBot(userReceiverFameId: string): string {
     return `<:Cheryl:1241523161795661854> Mesmo que ${userMention(userReceiverFameId)} seja seu ídolo, você não pode dar fama a um bot!`;
+}
+
+export function contentFameCooldown(userDate: number): string {
+    return `⌛ Você poderá dar fama para alguém novamente ${time(userDate / 1000, "F")}`;
 }
