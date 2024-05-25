@@ -48,18 +48,59 @@ new Event({
                                 // Retorna quantos usuário tem no canal
                                 const membersVoiceSize = (await guild.members.fetch(membersId)).voice.channel?.members.size;
 
-                                if (membersVoiceSize == 1) {
-                                    if (memberHasBoosted) {
-                                        await database.memberBloods.add(`${membersId}.bloods`, randomNumber(1, 2));
+                                const getBoostDB = await database.moderationBloods.get("Boost");
+                                const dateNow = +new Date();
+
+                                // Caso o boost esteja ativo ele verifica se a data atual é maior que a data do banco e se for deleta
+                                if (getBoostDB && dateNow > getBoostDB.boostDuration) await database.moderationBloods.delete("Boost");
+
+                                if (!getBoostDB) {
+                                    // Multiplicador normal
+                                    if (membersVoiceSize == 1) {
+                                        if (memberHasBoosted) {
+                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(1, 2));
+                                        } else {
+                                            await database.memberBloods.add(`${membersId}.bloods`, 1);
+                                        }
                                     } else {
-                                        await database.memberBloods.add(`${membersId}.bloods`, 1);
+                                        // Verifica se o usuário tem Boost ativo no servidor para dar 1.5x de Bloods
+                                        if (memberHasBoosted) {
+                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(1, 3));
+                                        } else {
+                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(1, 2));
+                                        }
                                     }
-                                } else {
-                                    // Verifica se o usuário tem Boost ativo no servidor para dar 1.5x de Bloods
-                                    if (memberHasBoosted) {
-                                        await database.memberBloods.add(`${membersId}.bloods`, randomNumber(1, 3));
+                                } else if (getBoostDB.boostMultiplication == "boost1.5x") {
+                                    // Multiplicador 1.5x
+                                    if (membersVoiceSize == 1) {
+                                        if (memberHasBoosted) {
+                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(2, 3));
+                                        } else {
+                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(1, 2));
+                                        }
                                     } else {
-                                        await database.memberBloods.add(`${membersId}.bloods`, randomNumber(1, 2));
+                                        // Verifica se o usuário tem Boost ativo no servidor para dar 1.5x de Bloods
+                                        if (memberHasBoosted) {
+                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(2, 4));
+                                        } else {
+                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(2, 3));
+                                        }
+                                    }
+                                } else if (getBoostDB.boostMultiplication == "boost2x") {
+                                    // Multiplicador 2x
+                                    if (membersVoiceSize == 1) {
+                                        if (memberHasBoosted) {
+                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(2, 4));
+                                        } else {
+                                            await database.memberBloods.add(`${membersId}.bloods`, 2);
+                                        }
+                                    } else {
+                                        // Verifica se o usuário tem Boost ativo no servidor para dar 1.5x de Bloods
+                                        if (memberHasBoosted) {
+                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(2, 4));
+                                        } else {
+                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(2, 5));
+                                        }
                                     }
                                 }
                             }

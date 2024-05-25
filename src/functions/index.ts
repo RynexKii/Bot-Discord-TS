@@ -39,3 +39,5 @@ export * from "./MessageProfile/MessageDaily/ContentDaily.js";
 
 // Staff Message
 export * from "./MessageStaff/ContentBloods.js";
+export * from "./MessageStaff/ContentBoostBloods.js";
+export * from "./MessageStaff/EmbedBoostBloods.js";
