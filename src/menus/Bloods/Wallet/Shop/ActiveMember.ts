@@ -1,4 +1,4 @@
-import { embedWalletShopActiveMember } from "#functions";
+import { embedWalletShopActiveMember } from "#messages";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle } from "discord.js";
 

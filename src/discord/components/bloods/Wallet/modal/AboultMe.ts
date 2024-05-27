@@ -1,6 +1,6 @@
 import { Modal } from "#base";
 import { database } from "#database";
-import { embedWallet } from "#functions";
+import { embedWallet } from "#messages";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle } from "discord.js";
 

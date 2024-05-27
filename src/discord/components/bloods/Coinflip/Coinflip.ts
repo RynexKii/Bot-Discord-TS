@@ -1,6 +1,6 @@
 import { Component } from "#base";
 import { database } from "#database";
-import { coinflipLowBloods, coinflipNotUserBet, coinflipWinMessage } from "#functions";
+import { coinflipLowBloods, coinflipNotUserBet, coinflipWinMessage } from "#messages";
 import { createRow, randomNumber } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle, ComponentType, userMention } from "discord.js";
 

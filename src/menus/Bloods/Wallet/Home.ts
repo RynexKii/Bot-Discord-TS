@@ -1,4 +1,4 @@
-import { embedWallet, embedWalletUsers } from "#functions";
+import { embedWallet, embedWalletUsers } from "#messages";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle } from "discord.js";
 

@@ -1,6 +1,6 @@
 import { Component } from "#base";
 import { database } from "#database";
-import { contentAlreadyRole, contentInsufficientBloods, contentLogPublic, contentLogStaff, contentNotInteractCommand } from "#functions";
+import { contentAlreadyRole, contentInsufficientBloods, contentLogPublic, contentLogStaff, contentNotInteractCommand } from "#messages";
 import { walletShopActiveMember, walletShopActiveMemberBuy } from "#menus";
 import { channelCongratulationsPublic, channelLogStaff, roleActiveMember } from "#tools";
 import { ComponentType } from "discord.js";

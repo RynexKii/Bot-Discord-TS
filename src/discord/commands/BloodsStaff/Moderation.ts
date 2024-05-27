@@ -1,7 +1,7 @@
 import { Command } from "#base";
 import { CommandTimer } from "#classes";
 import { database } from "#database";
-import { contentBoostActivated, contentBoostAlready, cooldownMessage, embedBoostActivated } from "#functions";
+import { contentBoostActivated, contentBoostAlready, cooldownMessage, embedBoostActivated } from "#messages";
 import { channelCongratulationsPublic, channelLogStaffBoost, channelSendCommandsId } from "#tools";
 import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
 

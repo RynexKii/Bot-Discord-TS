@@ -1,6 +1,6 @@
 import { Component } from "#base";
 import { database } from "#database";
-import { contentAlreadyGuild, contentIncorrectGuild, contentNotGuildRegistered, embedGuildAdd, embedGuildConfig, embedGuildRemove } from "#functions";
+import { contentAlreadyGuild, contentIncorrectGuild, contentNotGuildRegistered, embedGuildAdd, embedGuildConfig, embedGuildRemove } from "#messages";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle, ComponentType } from "discord.js";
 

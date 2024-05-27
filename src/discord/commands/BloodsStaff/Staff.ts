@@ -1,7 +1,7 @@
 import { Command } from "#base";
 import { CommandTimer } from "#classes";
 import { database } from "#database";
-import { cooldownMessage, contentStaffAddBloods, contentStaffBot, contentStaffNoHaveBloods, contentStaffRemoveBloods } from "#functions";
+import { cooldownMessage, contentStaffAddBloods, contentStaffBot, contentStaffNoHaveBloods, contentStaffRemoveBloods } from "#messages";
 import { bloodsHomeMenu } from "#menus";
 import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
 

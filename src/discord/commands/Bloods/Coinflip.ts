@@ -9,7 +9,7 @@ import {
     coinflipUserReceivedLowBloods,
     contentChannelSendCommand,
     cooldownMessage,
-} from "#functions";
+} from "#messages";
 import { channelSendCommandsId } from "#tools";
 import { createRow } from "@magicyan/discord";
 import { ApplicationCommandOptionType, ApplicationCommandType, ButtonBuilder, ButtonStyle } from "discord.js";

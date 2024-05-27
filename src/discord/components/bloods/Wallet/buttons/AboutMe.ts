@@ -1,6 +1,6 @@
 import { Component } from "#base";
 import { database } from "#database";
-import { contentNotInteractCommand, defaultContentAboutMe } from "#functions";
+import { contentNotInteractCommand, defaultContentAboutMe } from "#messages";
 import { createModalInput } from "@magicyan/discord";
 import { ComponentType, ModalBuilder, TextInputStyle } from "discord.js";
 

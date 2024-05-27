@@ -1,7 +1,7 @@
 import { Command } from "#base";
 import { CommandTimer } from "#classes";
 import { database } from "#database";
-import { contentChannelSendCommand, cooldownMessage, transferBloods, transferBloodsForBot, transferBloodsForYou, transferBloodsLow } from "#functions";
+import { contentChannelSendCommand, cooldownMessage, transferBloods, transferBloodsForBot, transferBloodsForYou, transferBloodsLow } from "#messages";
 import { channelSendCommandsId } from "#tools";
 import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
 

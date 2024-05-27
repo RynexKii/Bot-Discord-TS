@@ -1,7 +1,7 @@
 import { Component } from "#base";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle, ChannelSelectMenuBuilder, ChannelType, ComponentType } from "discord.js";
-import { embedAddButton, embedRemoveButton, contentNotAllChannels } from "#functions";
+import { embedAddButton, embedRemoveButton, contentNotAllChannels } from "#messages";
 import { database } from "#database";
 import { bloodsHomeMenu } from "#menus";
 

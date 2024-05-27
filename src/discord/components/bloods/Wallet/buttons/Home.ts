@@ -1,6 +1,6 @@
 import { Component } from "#base";
 import { database } from "#database";
-import { contentNotInteractCommand, defaultContentAboutMe } from "#functions";
+import { contentNotInteractCommand, defaultContentAboutMe } from "#messages";
 import { bloodsWalletMenu } from "#menus";
 import { ComponentType } from "discord.js";
 

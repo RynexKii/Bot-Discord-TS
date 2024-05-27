@@ -9,7 +9,7 @@ import {
     contentNotChannel,
     embedRemoveSuccessText,
     embedRemoveSuccessVoice,
-} from "#functions";
+} from "#messages";
 
 // Select Menu de Adicionar o Canal
 new Component({

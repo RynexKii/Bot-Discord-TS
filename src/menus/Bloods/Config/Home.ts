@@ -1,4 +1,4 @@
-import { embedBloodsConfig } from "#functions";
+import { embedBloodsConfig } from "#messages";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle } from "discord.js";
 

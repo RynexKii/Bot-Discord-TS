@@ -1,6 +1,6 @@
 import { Component } from "#base";
 import { database } from "#database";
-import { contentNotInteractCommand, embedWalletRank } from "#functions";
+import { contentNotInteractCommand, embedWalletRank } from "#messages";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle, ComponentType } from "discord.js";
 

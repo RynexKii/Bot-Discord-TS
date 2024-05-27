@@ -1,7 +1,7 @@
 import { Command } from "#base";
 import { CommandTimer } from "#classes";
 import { database } from "#database";
-import { contentChannelSendCommand, contentProfileBot, cooldownMessage, defaultContentAboutMe } from "#functions";
+import { contentChannelSendCommand, contentProfileBot, cooldownMessage, defaultContentAboutMe } from "#messages";
 import { bloodsWalletMenu, bloodsWalletMenuUsers } from "#menus";
 import { channelSendCommandsId } from "#tools";
 import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";

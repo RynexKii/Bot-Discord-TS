@@ -1,5 +1,5 @@
 import { Component } from "#base";
-import { contentNotInteractCommand } from "#functions";
+import { contentNotInteractCommand } from "#messages";
 import { bloodsWalletShopMenu } from "#menus";
 import { ComponentType } from "discord.js";
 

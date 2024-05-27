@@ -1,6 +1,6 @@
 import { Event } from "#base";
 import { database } from "#database";
-import { contentLogStaffRemove } from "#functions";
+import { contentLogStaffRemove } from "#messages";
 import { channelLogStaff, roleActiveMember } from "#tools";
 
 new Event({

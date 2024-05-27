@@ -1,6 +1,6 @@
 import { Command } from "#base";
 import { database } from "#database";
-import { contentChannelSendCommand, contentFameBot, contentFameCooldown, contentFameYourself, embedFameSend } from "#functions";
+import { contentChannelSendCommand, contentFameBot, contentFameCooldown, contentFameYourself, embedFameSend } from "#messages";
 import { channelSendCommandsId } from "#tools";
 import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
 

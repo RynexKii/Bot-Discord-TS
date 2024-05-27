@@ -1,6 +1,6 @@
 import { Command } from "#base";
 import { database } from "#database";
-import { contentChannelSendCommand, contentDailyCooldown, embedDailySend } from "#functions";
+import { contentChannelSendCommand, contentDailyCooldown, embedDailySend } from "#messages";
 import { channelSendCommandsId } from "#tools";
 import { randomNumber } from "@magicyan/discord";
 import { ApplicationCommandType } from "discord.js";
