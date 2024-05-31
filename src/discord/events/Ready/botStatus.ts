@@ -11,20 +11,19 @@ new Event({
 
         let indexNumbers = 0;
 
-        // Pegando os Top 3 Ranks e passando na atididade do bot
+        // Pegando os Top 3 Ranks e passando na atividade do bot
         async function setActivityTopRanks() {
-            const getMembersRankDB = await database.memberBloodsRank.get<any[]>("MembersRank");
+            // Pega todos os usuários já em ordem do menor para o maior pelo Rank
+            const getUserRankDB = await database.profile.find().sort({ bloodsRank: 1 });
 
-            // Caso for undefined ou o Array que sobrar estiver menor do que 3 usuários ele não deixa continuar
-            if (!getMembersRankDB || getMembersRankDB.length < 3) return;
+            // Verifica se o Array tem menos de 3 usuário e retorna
+            if (getUserRankDB.length < 3) return;
 
             switch (indexNumbers) {
                 case 0:
                     client.user.setActivity({
                         type: ActivityType.Custom,
-                        name: `Top 1º ${client.users.cache.get(getMembersRankDB[0].userId)?.globalName ?? "Desconhecido"} com ${
-                            getMembersRankDB[0].userBloods
-                        } Bloods 🩸`,
+                        name: `Top 1º ${client.users.cache.get(getUserRankDB[0].userId)?.displayName ?? "Desconhecido"} com ${getUserRankDB[0].bloods} Bloods 🩸`,
                     });
 
                     indexNumbers++;
@@ -32,9 +31,7 @@ new Event({
                 case 1:
                     client.user.setActivity({
                         type: ActivityType.Custom,
-                        name: `Top 2º ${client.users.cache.get(getMembersRankDB[1].userId)?.globalName ?? "Desconhecido"} com ${
-                            getMembersRankDB[1].userBloods
-                        } Bloods 🩸`,
+                        name: `Top 2º ${client.users.cache.get(getUserRankDB[1].userId)?.displayName ?? "Desconhecido"} com ${getUserRankDB[1].bloods} Bloods 🩸`,
                     });
 
                     indexNumbers++;
@@ -42,9 +39,7 @@ new Event({
                 case 2:
                     client.user.setActivity({
                         type: ActivityType.Custom,
-                        name: `Top 3º ${client.users.cache.get(getMembersRankDB[2].userId)?.globalName ?? "Desconhecido"} com ${
-                            getMembersRankDB[2].userBloods
-                        } Bloods 🩸`,
+                        name: `Top 3º ${client.users.cache.get(getUserRankDB[2].userId)?.displayName ?? "Desconhecido"} com ${getUserRankDB[2].bloods} Bloods 🩸`,
                     });
 
                     indexNumbers = 0;
@@ -53,7 +48,7 @@ new Event({
         }
 
         // Chamando a função logo quando o bot inicia
-        setActivityTopRanks();
+        await setActivityTopRanks();
 
         // Depois chamando a função em um loop 30 segundos que ficará alterando a mensagem da atividade do bot
         setInterval(() => {

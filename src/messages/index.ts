@@ -1,40 +1,41 @@
+export * from "./Profile/About/contentAbout.js";
 // Cooldown Commands Message
-export * from "../messages/MessageCooldown/Cooldown.js";
+export * from "./Cooldown/Cooldown.js";
 
 // Config Message
-export * from "../messages/MessageConfig/Config.js";
+export * from "./Config/Config.js";
 
 // Bloods Staff Message
 export * from "../messages/MessageEmbeds/BloodsMessageEmbeds/EmbedsStaff.js";
 export * from "../messages/MessageContent/BloodsMessageContent/ContentStaff.js";
 
 // Bloods Wallet Message
-export * from "../messages/MessageWallet/EmbedWallet.js";
-export * from "../messages/MessageWallet/ContentWallet.js";
+export * from "./Wallet/EmbedWallet.js";
+export * from "./Wallet/ContentWallet.js";
 
 // Wallet Itens Message
 export * from "../messages/MessageEmbeds/BloodsMessageEmbeds/EmbedWalletActiveMember.js";
 export * from "../messages/MessageContent/BloodsMessageContent/ContentWalletActiveMember.js";
 
 // Coinflip Message
-export * from "../messages/MessageCoinflip/ContentCoinflip.js";
+export * from "./Coinflip/ContentCoinflip.js";
 
 // Transfer Message
 export * from "../messages/MessageEmbeds/BloodsMessageEmbeds/EmbedTransfer.js";
 export * from "../messages/MessageContent/BloodsMessageContent/ContentTransfer.js";
 
 // About Me Message
-export * from "../messages/MessageProfile/MessageAboutMe/AboutMe.js";
+export * from "./Profile/About/contentAbout.js";
 
 // Fame Message
-export * from "../messages/MessageProfile/MessageFame/EmbedFame.js";
-export * from "../messages/MessageProfile/MessageFame/ContentFame.js";
+export * from "./Profile/Fame/EmbedFame.js";
+export * from "./Profile/Fame/ContentFame.js";
 
 // Daily Message
-export * from "../messages/MessageProfile/MessageDaily/EmbedDaily.js";
-export * from "../messages/MessageProfile/MessageDaily/ContentDaily.js";
+export * from "./Profile/Daily/EmbedDaily.js";
+export * from "./Profile/Daily/ContentDaily.js";
 
 // Staff Message
-export * from "../messages/MessageStaff/ContentBloods.js";
-export * from "../messages/MessageStaff/ContentBoostBloods.js";
-export * from "../messages/MessageStaff/EmbedBoostBloods.js";
+export * from "./Staff/ContentBloods.js";
+export * from "./Staff/ContentBoostBloods.js";
+export * from "./Staff/EmbedBoostBloods.js";

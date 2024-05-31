@@ -1,6 +1,6 @@
 import { Component } from "#base";
 import { database } from "#database";
-import { contentNotInteractCommand, defaultContentAboutMe } from "#messages";
+import { contentNotInteractCommand } from "#messages";
 import { bloodsWalletMenu } from "#menus";
 import { ComponentType } from "discord.js";
 
@@ -14,29 +14,14 @@ new Component({
         if (interaction.user.id !== interaction.message.interaction?.user.id) return await interaction.reply({ content: contentNotInteractCommand, ephemeral: true });
 
         const userId = interaction.user.id;
-
         const userName = interaction.user.displayName;
-
         const userIcon = interaction.user.displayAvatarURL();
+        const userBloodsDB = await database.profile.getBloods(userId);
+        const userAboutDB = await database.profile.getAbout(userId);
+        const userFameDB = await database.profile.getFame(userId);
+        const userRankDB = await database.profile.getRank(userId);
+        const allUsersRanksDB = (await database.profile.find()).length;
 
-        const userBloods = await database.memberBloods.get<number>(`${userId}.bloods`);
-
-        const GetUserRank = await database.memberBloodsRank.get<any[]>("MembersRank");
-
-        const userAboutMeDB = await database.memberProfile.get<string>(`${userId}.aboutMe`);
-
-        const userFameDB = await database.memberProfile.get<number>(`${userId}.fame`);
-
-        let userRank = null;
-
-        GetUserRank?.forEach((element) => {
-            if (element.userId === userId) {
-                userRank = element.userRank;
-            }
-        });
-
-        return await interaction.update(
-            bloodsWalletMenu(userName, userIcon, userBloods ?? 0, userAboutMeDB ?? defaultContentAboutMe(userId), userFameDB ?? 0, userRank, GetUserRank?.length)
-        );
+        return await interaction.update(bloodsWalletMenu(userName, userIcon, userBloodsDB, userAboutDB, userFameDB, userRankDB, allUsersRanksDB));
     },
 });

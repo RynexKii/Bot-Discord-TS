@@ -8,14 +8,15 @@ new Event({
     async run(client) {
         async function addBloodsVoiceChannel() {
             const allMembersGuild: string[] = [];
-            const guildIdDB = await database.channelBloodsIgnored.get<string[]>("GuildConfig.guildId");
-            const allChannelsDB = await database.channelBloodsIgnored.get<string[]>("GuildConfig.allChannels");
+            const getGuildIdDB = await database.guild.getGuildId("Dead by Daylight Brasil");
 
             // Verifica se existe um guildId registrado no Banco de Dados
-            if (!guildIdDB) return;
+            if (!getGuildIdDB) return;
+
+            const getAllChannelsDB = await database.guild.getAllChannels(getGuildIdDB);
 
             // De todas as Guilds que o bot está, pega a guild que está registrada no Banco de Dados
-            const guild = client.guilds.cache.get(guildIdDB[0]);
+            const guild = client.guilds.cache.get(getGuildIdDB);
 
             // Verifica se existe um valor na variável guild
             if (!guild) return;
@@ -39,67 +40,67 @@ new Event({
                     // Uma segunda verificação se o usuário está conectado no canal do Servidor Principal
                     if (memberHasConnected) {
                         // Verifica se existe um canal registrado no Banco de Dados para ser ignorado
-                        if (allChannelsDB) {
+                        if (getAllChannelsDB !== "Sem Canal") {
                             // Verificação dos canais que não concederão Bloods
-                            if (!allChannelsDB.includes(memberVoiceConnectedId)) {
+                            if (!getAllChannelsDB.includes(memberVoiceConnectedId)) {
                                 // Verifica se o usuário deu boost no Servidor
                                 const memberHasBoosted = guild.members.cache.get(membersId)?.premiumSince;
 
                                 // Retorna quantos usuário tem no canal
                                 const membersVoiceSize = (await guild.members.fetch(membersId)).voice.channel?.members.size;
 
-                                const getBoostDB = await database.moderationBloods.get("Boost");
+                                const getBloodsBoostDB = await database.guild.getBloodsBoost(getGuildIdDB);
                                 const dateNow = +new Date();
 
                                 // Caso o boost esteja ativo ele verifica se a data atual é maior que a data do banco e se for deleta
-                                if (getBoostDB && dateNow > getBoostDB.boostDuration) await database.moderationBloods.delete("Boost");
+                                if (getBloodsBoostDB && dateNow > getBloodsBoostDB.boostDuration) await database.guild.deleteBloodsBoost(getGuildIdDB);
 
-                                if (!getBoostDB) {
+                                if (!getBloodsBoostDB?.boostDuration) {
                                     // Multiplicador normal
                                     if (membersVoiceSize == 1) {
                                         if (memberHasBoosted) {
-                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(1, 2));
+                                            await database.profile.addBloods(membersId, randomNumber(1, 2));
                                         } else {
-                                            await database.memberBloods.add(`${membersId}.bloods`, 1);
+                                            await database.profile.addBloods(membersId, 1);
                                         }
                                     } else {
                                         // Verifica se o usuário tem Boost ativo no servidor para dar 1.5x de Bloods
                                         if (memberHasBoosted) {
-                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(1, 3));
+                                            await database.profile.addBloods(membersId, randomNumber(1, 3));
                                         } else {
-                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(1, 2));
+                                            await database.profile.addBloods(membersId, randomNumber(1, 2));
                                         }
                                     }
-                                } else if (getBoostDB.boostMultiplication == "boost1.5x") {
+                                } else if (getBloodsBoostDB.boostMultiplication == "boost1.5x") {
                                     // Multiplicador 1.5x
                                     if (membersVoiceSize == 1) {
                                         if (memberHasBoosted) {
-                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(2, 3));
+                                            await database.profile.addBloods(membersId, randomNumber(2, 3));
                                         } else {
-                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(1, 2));
+                                            await database.profile.addBloods(membersId, randomNumber(1, 2));
                                         }
                                     } else {
                                         // Verifica se o usuário tem Boost ativo no servidor para dar 1.5x de Bloods
                                         if (memberHasBoosted) {
-                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(2, 4));
+                                            await database.profile.addBloods(membersId, randomNumber(2, 4));
                                         } else {
-                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(2, 3));
+                                            await database.profile.addBloods(membersId, randomNumber(2, 3));
                                         }
                                     }
-                                } else if (getBoostDB.boostMultiplication == "boost2x") {
+                                } else if (getBloodsBoostDB.boostMultiplication == "boost2x") {
                                     // Multiplicador 2x
                                     if (membersVoiceSize == 1) {
                                         if (memberHasBoosted) {
-                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(2, 4));
+                                            await database.profile.addBloods(membersId, randomNumber(2, 4));
                                         } else {
-                                            await database.memberBloods.add(`${membersId}.bloods`, 2);
+                                            await database.profile.addBloods(membersId, 2);
                                         }
                                     } else {
                                         // Verifica se o usuário tem Boost ativo no servidor para dar 1.5x de Bloods
                                         if (memberHasBoosted) {
-                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(2, 4));
+                                            await database.profile.addBloods(membersId, randomNumber(2, 5));
                                         } else {
-                                            await database.memberBloods.add(`${membersId}.bloods`, randomNumber(2, 5));
+                                            await database.profile.addBloods(membersId, randomNumber(2, 4));
                                         }
                                     }
                                 }

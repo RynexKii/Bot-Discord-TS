@@ -1,6 +1,6 @@
 import { database } from "#database";
 
-export class CommandTimer {
+export class CommandCooldown {
     userId: string;
     commandId: string;
 
@@ -11,17 +11,18 @@ export class CommandTimer {
 
     async setTimer(seconds: number) {
         const timestamp = +new Date();
-        const userTimestampDB = await database.commandTimer.get<number>(`${this.userId}.${this.commandId}`);
 
-        if (!userTimestampDB) return await database.commandTimer.set(`${this.userId}.${this.commandId}`, seconds * 1000 + timestamp);
+        const userTimestampDB = await database.commandCooldown.getTimestamp(this.userId, this.commandId);
 
-        if (timestamp > userTimestampDB) return await database.commandTimer.set(`${this.userId}.${this.commandId}`, seconds * 1000 + timestamp);
+        if (!userTimestampDB) return await database.commandCooldown.setTimestamp(this.userId, this.commandId, seconds * 1000 + timestamp);
+
+        if (timestamp > userTimestampDB) return await database.commandCooldown.setTimestamp(this.userId, this.commandId, seconds * 1000 + timestamp);
 
         return;
     }
 
     async getTimer(): Promise<Date> {
-        const userTimestampDB = await database.commandTimer.get<number>(`${this.userId}.${this.commandId}`);
+        const userTimestampDB = await database.commandCooldown.getTimestamp(this.userId, this.commandId);
         const dateNow = new Date();
 
         if (userTimestampDB) return new Date(userTimestampDB);
@@ -31,7 +32,7 @@ export class CommandTimer {
 
     async verifyTimer(): Promise<boolean> {
         const timestamp = +new Date();
-        const userTimestampDB = await database.commandTimer.get<number>(`${this.userId}.${this.commandId}`);
+        const userTimestampDB = await database.commandCooldown.getTimestamp(this.userId, this.commandId);
 
         if (!userTimestampDB) return false;
 

@@ -1,5 +1,5 @@
 import { Command } from "#base";
-import { CommandTimer } from "#classes";
+import { CommandCooldown } from "#classes";
 import { database } from "#database";
 import {
     coinflipMessage,
@@ -60,8 +60,8 @@ new Command({
 
         const valueRate = Math.round(valueBet * 0.05);
 
-        const bloodsUserDB = await database.memberBloods.get<number>(`${userId}.bloods`);
-        const bloodsUserReceivedDB = await database.memberBloods.get<number>(`${userReceivedId}.bloods`);
+        const bloodsUserSendDB = await database.profile.getBloods(userId);
+        const bloodsUserReceivedDB = await database.profile.getBloods(userReceivedId);
 
         // Verifica se o canal que foi executado o comando é o mesmo que está no sendCommandsChannel
         if (interaction.channelId !== channelSendCommandsId)
@@ -75,14 +75,14 @@ new Command({
         if (interaction.options.getUser("usuário", true).bot) return await interaction.reply({ content: coinflipUserBot, ephemeral: true });
 
         // Verifica se o usuário que enviou a aposta tem Bloods
-        if (!bloodsUserDB || valueBet > bloodsUserDB) return await interaction.reply({ content: coinflipUserLowBloods, ephemeral: true });
+        if (valueBet > bloodsUserSendDB) return await interaction.reply({ content: coinflipUserLowBloods, ephemeral: true });
 
         // Verifica se quem vai receber a aposta tem Bloods
-        if (!bloodsUserReceivedDB || valueBet > bloodsUserReceivedDB)
+        if (valueBet > bloodsUserReceivedDB)
             return await interaction.reply({ content: coinflipUserReceivedLowBloods(userReceivedId), ephemeral: true });
 
         // Colocando cooldown no comando de 20 segundos
-        const cooldownCommand = new CommandTimer(userId, "Coinflip");
+        const cooldownCommand = new CommandCooldown(userId, "Coinflip");
 
         cooldownCommand.setTimer(20);
 
@@ -111,11 +111,6 @@ new Command({
         const messageCoinflipId = (await messageCoinflip.fetch()).id;
 
         // Armazena no Banco de Dados o ID da mensagem, Lado que foi escolhido e o Valor da aposta
-        return await database.coinflip.set(messageCoinflipId, {
-            userSendId: userId,
-            userReceivedId: userReceivedId,
-            side: sideBet,
-            value: valueBet,
-        });
+        return await database.profile.pushCoinflip(userId, messageCoinflipId, userId, userReceivedId, sideBet, valueBet);
     },
 });

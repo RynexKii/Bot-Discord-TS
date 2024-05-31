@@ -20,7 +20,7 @@ new Command({
     async run(interaction) {
         const userId = interaction.user.id;
         const userReceiverFameId = interaction.options.getUser("usuário", true).id;
-        const getDateUserDB = await database.memberProfile.get<number>(`${userId}.famaDate`);
+        const getFameTimestampDB = await database.profile.getFameTimestamp(userId);
 
         // Verifica se o canal que foi executado o comando é o mesmo que está no sendCommandsChannel
         if (interaction.channelId !== channelSendCommandsId)
@@ -46,17 +46,17 @@ new Command({
         nextDayDate.setHours(0, 0, 0, 0);
 
         async function collectFama() {
-            await database.memberProfile.add(`${userReceiverFameId}.fame`, 1);
+            await database.profile.addFame(userReceiverFameId, 1);
 
-            await database.memberProfile.set(`${userId}.famaDate`, nextDayDate.getTime());
+            await database.profile.setFameTimestamp(userId, nextDayDate.getTime());
 
             return await interaction.reply({ embeds: [embedFameSend(userId, userReceiverFameId)] });
         }
 
         // Caso for a primeira vez que o usuário de o comando ele chama a função para receber a recompensa
-        if (!getDateUserDB) return collectFama();
+        if (!getFameTimestampDB) return collectFama();
 
-        if (dateNow.getTime() < getDateUserDB) return await interaction.reply({ content: contentFameCooldown(getDateUserDB), ephemeral: true });
+        if (dateNow.getTime() < getFameTimestampDB) return await interaction.reply({ content: contentFameCooldown(getFameTimestampDB), ephemeral: true });
 
         return collectFama();
     },

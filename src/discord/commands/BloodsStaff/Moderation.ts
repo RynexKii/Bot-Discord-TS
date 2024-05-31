@@ -1,5 +1,5 @@
 import { Command } from "#base";
-import { CommandTimer } from "#classes";
+import { CommandCooldown } from "#classes";
 import { database } from "#database";
 import { contentBoostActivated, contentBoostAlready, cooldownMessage, embedBoostActivated } from "#messages";
 import { channelCongratulationsPublic, channelLogStaffBoost, channelSendCommandsId } from "#tools";
@@ -70,7 +70,7 @@ new Command({
         const subCommand = interaction.options.getSubcommand();
 
         // Colocando cooldown no comando de 5 Segundos
-        const cooldownCommand = new CommandTimer(userId, "Moderation");
+        const cooldownCommand = new CommandCooldown(userId, "Moderation");
 
         cooldownCommand.setTimer(5);
 
@@ -85,18 +85,19 @@ new Command({
                         case "boost1.5x":
                             {
                                 const getBoostDurationMinutes = Number(interaction.options.getString("duração"));
-                                const getBoost = await database.moderationBloods.get("Boost");
+                                const guildId = interaction.guildId;
+                                const getBloodsBoostDB = await database.guild.getBloodsBoost(guildId);
                                 const dateNow = +new Date();
                                 const dateBoost = 1000 * 60 * getBoostDurationMinutes + dateNow;
 
-                                if (getBoost)
+
+                                if (getBloodsBoostDB?.boostDuration)
                                     return await interaction.reply({
-                                        content: contentBoostAlready(getBoost.boostMultiplication, getBoost.boostDuration),
+                                        content: contentBoostAlready(getBloodsBoostDB.boostMultiplication, getBloodsBoostDB.boostDuration),
                                         ephemeral: true,
                                     });
 
-                                await database.moderationBloods.set("Boost.boostMultiplication", getMultiplication);
-                                await database.moderationBloods.set("Boost.boostDuration", dateBoost);
+                                await database.guild.setBloodsBoost(guildId, getMultiplication, dateBoost);
 
                                 // Canal geral
                                 const getChannelSend = interaction.guild.channels.cache.get(channelCongratulationsPublic);
@@ -125,18 +126,18 @@ new Command({
                         case "boost2x":
                             {
                                 const getBoostDurationMinutes = Number(interaction.options.getString("duração"));
-                                const getBoost = await database.moderationBloods.get("Boost");
+                                const guildId = interaction.guildId;
+                                const getBloodsBoostDB = await database.guild.getBloodsBoost(guildId);
                                 const dateNow = +new Date();
                                 const dateBoost = 1000 * 60 * getBoostDurationMinutes + dateNow;
 
-                                if (getBoost)
+                                if (getBloodsBoostDB?.boostDuration)
                                     return await interaction.reply({
-                                        content: contentBoostAlready(getBoost.boostMultiplication, getBoost.boostDuration),
+                                        content: contentBoostAlready(getBloodsBoostDB.boostMultiplication, getBloodsBoostDB.boostDuration),
                                         ephemeral: true,
                                     });
 
-                                await database.moderationBloods.set("Boost.boostMultiplication", getMultiplication);
-                                await database.moderationBloods.set("Boost.boostDuration", dateBoost);
+                                await database.guild.setBloodsBoost(guildId, getMultiplication, dateBoost);
 
                                 // Canal geral
                                 const getChannelSend = interaction.guild.channels.cache.get(channelCongratulationsPublic);

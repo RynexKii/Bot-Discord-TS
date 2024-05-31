@@ -1,14 +1,14 @@
 import { log } from "#settings";
 import chalk from "chalk";
 import { CacheType, Collection, ComponentType, Interaction, MessageComponentInteraction } from "discord.js";
-import { getCustomIdParams, Params, Prettify } from "./utils.js";
+import { getCustomIdParams, Params, Prettify } from "./utils/Params.js";
 import { spaceBuilder } from "@magicyan/discord";
 
 type MessageComponentType = Exclude<ComponentType, ComponentType.TextInput>
 
-type ComponentInteraction<T, C extends CacheType> = 
-    T extends ComponentType.ActionRow ? MessageComponentInteraction<C> :
-	Extract<Interaction<C>, { componentType: T }>
+type ComponentInteraction<T, C extends CacheType> = T extends ComponentType.ActionRow 
+    ? MessageComponentInteraction<C> 
+    : Extract<Interaction<C>, { componentType: T }>
 
 type ComponentData<I extends string, T, C extends CacheType = CacheType> = {
     customId: I; type: T; cache?: C;
@@ -57,9 +57,9 @@ export class Component<I extends string, T extends MessageComponentType, C exten
 
             for(const { customId, type } of components.values()){
                 const text = spaceBuilder(
-                    chalk.blue.underline(customId),
                     chalk.greenBright.underline(names.get(type)),
-                    "component registered successfully!"
+                    chalk.blue.underline(customId),
+                    "component loaded successfully!"
                 );
                 log.success(chalk.green(text));
             }

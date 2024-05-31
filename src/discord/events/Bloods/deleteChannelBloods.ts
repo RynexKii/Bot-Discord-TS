@@ -4,16 +4,16 @@ import { database } from "#database";
 new Event({
     name: "Quando um canal for deletado, remove ele do Banco de Dados (GuildConfig)",
     event: "channelDelete",
-    async run(channel) {
-        const deletedChannel = channel.id;
-
-        const getAllChannels = await database.channelBloodsIgnored.get<string[]>("GuildConfig.allChannels");
+    async run(interaction) {
+        const deletedChannel = interaction.id;
+        const getGuildIdDB = await database.guild.getGuildId("Dead by Daylight Brasil");
+        const getAllChannelsDB = await database.guild.getAllChannels(getGuildIdDB);
 
         // Verifica se existe o ID do canal deletado no Array allChannels e caso tenha deleta o canal de todos os Arrays
-        if (getAllChannels && getAllChannels.includes(deletedChannel)) {
-            await database.channelBloodsIgnored.pull("GuildConfig.allChannels", deletedChannel);
-            await database.channelBloodsIgnored.pull("GuildConfig.textChannels", deletedChannel);
-            await database.channelBloodsIgnored.pull("GuildConfig.voiceChannels", deletedChannel);
+        if (getAllChannelsDB !== "Sem Canal" && getAllChannelsDB.includes(deletedChannel)) {
+            await database.guild.pullAllChannels(getGuildIdDB, deletedChannel);
+            await database.guild.pullTextChannels(getGuildIdDB, deletedChannel);
+            await database.guild.pullVoiceChannels(getGuildIdDB, deletedChannel);
         }
     },
 });

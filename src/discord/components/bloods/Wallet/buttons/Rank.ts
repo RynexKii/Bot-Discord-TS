@@ -11,8 +11,7 @@ new Component({
     cache: "cached",
     async run(interaction) {
         // Verifica se o usuário que está interagindo com o botão é o mesmo que enviou a mensagem
-        if (interaction.user.id !== interaction.message.interaction?.user.id)
-            return await interaction.reply({ content: contentNotInteractCommand, ephemeral: true });
+        if (interaction.user.id !== interaction.message.interaction?.user.id) return await interaction.reply({ content: contentNotInteractCommand, ephemeral: true });
 
         const rowButton = createRow(
             new ButtonBuilder({
@@ -25,10 +24,10 @@ new Component({
 
         const userId = interaction.user.id;
 
-        const getMembersRank = await database.memberBloodsRank.get<any[]>("MembersRank");
+        const getAllUsersRankDB = await database.profile.find().sort({ bloodsRank: 1 });
 
-        const getFirstFiveMembers = getMembersRank?.slice(0, 10);
+        const getFirstFiveUsers = getAllUsersRankDB?.slice(0, 10);
 
-        return await interaction.update(embedWalletRank(userId, getFirstFiveMembers, rowButton));
+        return await interaction.update(embedWalletRank(userId, getFirstFiveUsers, rowButton));
     },
 });

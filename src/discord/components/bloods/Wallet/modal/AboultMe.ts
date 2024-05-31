@@ -9,23 +9,16 @@ new Modal({
     cache: "cached",
     async run(interaction) {
         const userId = interaction.user.id;
-        const { fields } = interaction;
-        const modalValueAbountMe = fields.getTextInputValue("aboutMe");
+        const modalValueAbountMe = interaction.fields.getTextInputValue("aboutMe");
         const userName = interaction.user.displayName;
         const userIcon = interaction.user.displayAvatarURL();
-        const userBloods = await database.memberBloods.get<number>(`${userId}.bloods`);
-        const userFame = await database.memberProfile.get<number>(`${userId}.fame`);
-        const GetUserRank = await database.memberBloodsRank.get<any[]>("MembersRank");
+        const userBloodsDB = await database.profile.getBloods(userId);
+        const userFameDB = await database.profile.getFame(userId);
+        const userRankDB = await database.profile.getRank(userId);
+        const allUsersRanksDB = (await database.profile.find()).length;
 
-        await database.memberProfile.set(`${userId}.aboutMe`, modalValueAbountMe);
-
-        let userRank = null;
-
-        GetUserRank?.forEach((element) => {
-            if (element.userId === userId) {
-                userRank = element.userRank;
-            }
-        });
+        // Adicionando o sobre mim no Banco de Dados
+        await database.profile.setAbout(userId, modalValueAbountMe);
 
         const rowButton = createRow(
             new ButtonBuilder({
@@ -53,14 +46,15 @@ new Modal({
                 customId: "button/bloods/wallet/ranks",
                 label: "Ranks",
                 style: ButtonStyle.Secondary,
-                emoji: "<:ranking:1226234468587540500>",
+                emoji: "<:rank:1242560092281245746>",
+                disabled: true,
             })
         );
 
         await interaction.deferUpdate();
 
         await interaction.editReply({
-            embeds: [embedWallet(userName, userIcon, userBloods ?? 0, modalValueAbountMe, userFame ?? 0, userRank, GetUserRank?.length)],
+            embeds: [embedWallet(userName, userIcon, userBloodsDB, modalValueAbountMe, userFameDB, userRankDB, allUsersRanksDB)],
             components: [rowButton],
         });
     },

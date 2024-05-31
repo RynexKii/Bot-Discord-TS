@@ -38,6 +38,7 @@ export function bloodsWalletMenu(
             label: "Ranks",
             style: ButtonStyle.Secondary,
             emoji: "<:rank:1242560092281245746>",
+            disabled: true,
         })
     );
 

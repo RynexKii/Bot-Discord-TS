@@ -1,5 +1,5 @@
 import { Command } from "#base";
-import { CommandTimer } from "#classes";
+import { CommandCooldown } from "#classes";
 import { database } from "#database";
 import { cooldownMessage, contentStaffAddBloods, contentStaffBot, contentStaffNoHaveBloods, contentStaffRemoveBloods } from "#messages";
 import { bloodsHomeMenu } from "#menus";
@@ -67,7 +67,7 @@ new Command({
         const userId = interaction.user.id;
 
         // Colocando cooldown no comando de 5 Segundos
-        const cooldownCommand = new CommandTimer(userId, "Staff");
+        const cooldownCommand = new CommandCooldown(userId, "Staff");
 
         cooldownCommand.setTimer(5);
 
@@ -80,9 +80,7 @@ new Command({
 
                 switch (subCommand) {
                     case "configurações": {
-                        const getChannelDB = await database.channelBloodsIgnored.get("GuildConfig");
-
-                        await interaction.reply(bloodsHomeMenu(getChannelDB));
+                        await interaction.reply(await bloodsHomeMenu());
                         break;
                     }
                     case "adicionar-remover": {
@@ -96,7 +94,7 @@ new Command({
                                 {
                                     if (userBot) return await interaction.reply({ content: contentStaffBot, ephemeral: true });
 
-                                    await database.memberBloods.add(`${userReceiverId}.bloods`, valueBloods);
+                                    await database.profile.addBloods(userReceiverId, valueBloods);
 
                                     await interaction.reply({ content: contentStaffAddBloods(userReceiverId, valueBloods), ephemeral: true });
                                 }
@@ -104,12 +102,12 @@ new Command({
 
                             case "removeBloods":
                                 {
-                                    const bloodsUserDB = await database.memberBloods.get<number>(`${userReceiverId}.bloods`);
+                                    const bloodsUserDB = await database.profile.getBloods(userReceiverId);
 
-                                    if ((bloodsUserDB && bloodsUserDB < valueBloods) || bloodsUserDB == 0)
+                                    if (bloodsUserDB < valueBloods || bloodsUserDB == 0)
                                         return await interaction.reply({ content: contentStaffNoHaveBloods(userReceiverId, valueBloods, bloodsUserDB), ephemeral: true });
 
-                                    await database.memberBloods.sub(`${userReceiverId}.bloods`, valueBloods);
+                                    await database.profile.subBloods(userReceiverId, valueBloods);
 
                                     await interaction.reply({ content: contentStaffRemoveBloods(userReceiverId, valueBloods), ephemeral: true });
                                 }

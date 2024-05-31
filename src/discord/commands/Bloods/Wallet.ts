@@ -1,7 +1,7 @@
 import { Command } from "#base";
-import { CommandTimer } from "#classes";
+import { CommandCooldown } from "#classes";
 import { database } from "#database";
-import { contentChannelSendCommand, contentProfileBot, cooldownMessage, defaultContentAboutMe } from "#messages";
+import { contentChannelSendCommand, contentProfileBot, cooldownMessage } from "#messages";
 import { bloodsWalletMenu, bloodsWalletMenuUsers } from "#menus";
 import { channelSendCommandsId } from "#tools";
 import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
@@ -32,7 +32,7 @@ new Command({
         if (interaction.options.getUser("usuário")?.bot && userBotId) return await interaction.reply({ content: contentProfileBot(userBotId), ephemeral: true });
 
         // Colocando cooldown no comando de 1 minuto
-        const cooldownCommand = new CommandTimer(userId, "Wallet");
+        const cooldownCommand = new CommandCooldown(userId, "Wallet");
 
         cooldownCommand.setTimer(30);
 
@@ -42,43 +42,16 @@ new Command({
         async function showWallet(showUserId: string) {
             const userName = (await interaction.guild.members.fetch(showUserId)).displayName;
             const userIcon = (await interaction.guild.members.fetch(showUserId)).displayAvatarURL();
-            const userBloods = await database.memberBloods.get<number>(`${showUserId}.bloods`);
-            const userAboutMeDB = await database.memberProfile.get<string>(`${showUserId}.aboutMe`);
-            const GetUserRank = await database.memberBloodsRank.get<any[]>("MembersRank");
-            const userFameDB = await database.memberProfile.get<number>(`${showUserId}.fame`);
-
-            let userRank = null;
-
-            GetUserRank?.forEach((element) => {
-                if (element.userId === showUserId) {
-                    userRank = element.userRank;
-                }
-            });
+            const userBloodsDB = await database.profile.getBloods(showUserId);
+            const userAboutDB = await database.profile.getAbout(showUserId);
+            const userFameDB = await database.profile.getFame(showUserId);
+            const userRankDB = await database.profile.getRank(showUserId);
+            const allUsersRanksDB = (await database.profile.find()).length;
 
             if (!userReceiverId || userId == userReceiverId) {
-                return await interaction.reply(
-                    bloodsWalletMenu(
-                        userName,
-                        userIcon,
-                        userBloods ?? 0,
-                        userAboutMeDB ?? defaultContentAboutMe(showUserId),
-                        userFameDB ?? 0,
-                        userRank,
-                        GetUserRank?.length
-                    )
-                );
+                return await interaction.reply(bloodsWalletMenu(userName, userIcon, userBloodsDB, userAboutDB, userFameDB, userRankDB, allUsersRanksDB));
             } else {
-                return await interaction.reply(
-                    bloodsWalletMenuUsers(
-                        userName,
-                        userIcon,
-                        userBloods ?? 0,
-                        userAboutMeDB ?? defaultContentAboutMe(showUserId),
-                        userFameDB ?? 0,
-                        userRank,
-                        GetUserRank?.length
-                    )
-                );
+                return await interaction.reply(bloodsWalletMenuUsers(userName, userIcon, userBloodsDB, userAboutDB, userFameDB, userRankDB, allUsersRanksDB));
             }
         }
 

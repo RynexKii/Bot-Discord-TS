@@ -10,7 +10,7 @@ new Event({
         // Função para remover o cargo de Membro Ativo após 30 dias da compra
         async function removeActiveMember() {
             //! Integrar mais pra frente com o Banco de Dados
-            const guildId = await database.channelBloodsIgnored.get<string[]>("GuildConfig.guildId");
+            const guildIdDB = await database.guild.getGuildId("Dead by Daylight Brasil");
 
             //! Integrar mais pra frente com o Banco de Dados
             // TODO: Colocar o ID do cargo de Membro Ativo
@@ -20,36 +20,36 @@ new Event({
             // TODO: Colocar o ID do canal de Logs da Staff
             const getChannelLogStaff = client.channels.cache.get(channelLogStaff);
 
-            if (guildId) {
-                // Pega os usuário que estão com o cargo (activeMemberRoleId)
-                const getMemberRole = (await client.guilds.cache.get(guildId[0])?.members.fetch())?.filter((m) => m.roles.cache.has(activeMemberRoleId));
+            if (!guildIdDB) return;
 
-                // Pega os ID's dos usuários e retorna um Array com os ID's
-                const getUsersId = getMemberRole?.map((user) => user.id);
+            // Pega os usuário que estão com o cargo (activeMemberRoleId)
+            const getMemberRole = (await client.guilds.cache.get(guildIdDB)?.members.fetch())?.filter((m) => m.roles.cache.has(activeMemberRoleId));
 
-                const getTimestampToday = Math.round(+new Date() / 1000);
+            // Pega os ID's dos usuários e retorna um Array com os ID's
+            const getUsersId = getMemberRole?.map((user) => user.id);
 
-                if (getUsersId) {
-                    for (let index = 0; index < getUsersId.length; index++) {
-                        const userId = getUsersId[index];
+            const getTimestampNow = +new Date();
 
-                        // Pega o timestamp que esta armazenado na database do usuário
-                        const getTimestampMember = await database.activeMemberDuration.get<number>(`${userId}.timestamp`);
+            if (getUsersId) {
+                for (let index = 0; index < getUsersId.length; index++) {
+                    const userId = getUsersId[index];
 
-                        if (!getTimestampMember) {
-                            // Remove o cargo do usuário
-                            client.guilds.cache.get(guildId[0])?.members.cache.get(userId)?.roles.remove(activeMemberRoleId);
-                        } else if (getTimestampMember < getTimestampToday) {
-                            // Remove o cargo do usuário
-                            client.guilds.cache.get(guildId[0])?.members.cache.get(userId)?.roles.remove(activeMemberRoleId);
+                    // Pega o timestamp que esta armazenado na database do usuário
+                    const getTimestampUserDB = await database.profile.getActiveMemberTimestamp(userId);
 
-                            // Remove a tabela activeMemberDuration do usuário
-                            database.activeMemberDuration.delete(userId);
+                    if (!getTimestampUserDB) {
+                        // Remove o cargo do usuário
+                        client.guilds.cache.get(guildIdDB)?.members.cache.get(userId)?.roles.remove(activeMemberRoleId);
+                    } else if (getTimestampUserDB < getTimestampNow) {
+                        // Remove o cargo do usuário
+                        client.guilds.cache.get(guildIdDB)?.members.cache.get(userId)?.roles.remove(activeMemberRoleId);
 
-                            // Logs da Staff
-                            if (getChannelLogStaff && getChannelLogStaff.isTextBased()) {
-                                getChannelLogStaff.send(contentLogStaffRemove(userId));
-                            }
+                        // Remove a tabela activeMemberTimestamp do usuário
+                        await database.profile.deleteActiveMemberTimestamp(userId);
+
+                        // Logs da Staff
+                        if (getChannelLogStaff && getChannelLogStaff.isTextBased()) {
+                            getChannelLogStaff.send(contentLogStaffRemove(userId));
                         }
                     }
                 }

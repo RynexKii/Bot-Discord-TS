@@ -11,7 +11,7 @@ new Component({
     cache: "cached",
     async run(interaction) {
         const messageId = interaction.message.id;
-        const getBetDB = await database.coinflip.get(messageId);
+        const getBetDB = await database.profile.getCoinflip(messageId);
 
         const cancelDisabled = createRow(
             new ButtonBuilder({
@@ -32,11 +32,11 @@ new Component({
                 ephemeral: true,
             });
 
-        const getBloodsSendUser = await database.memberBloods.get<number>(`${getBetDB.userSendId}.bloods`);
-        const getBloodsReceivedUser = await database.memberBloods.get<number>(`${getBetDB.userReceivedId}.bloods`);
+        const getBloodsSendUser = await database.profile.getBloods(getBetDB.userSendId);
+        const getBloodsReceivedUser = await database.profile.getBloods(getBetDB.userReceivedId);
 
         // Verifica se os 2 usuários ainda possui Bloods para a aposta
-        if (!getBloodsSendUser || getBloodsSendUser < getBetDB.value || !getBloodsReceivedUser || getBloodsReceivedUser < getBetDB.value) {
+        if (getBloodsSendUser < getBetDB.value || getBloodsReceivedUser < getBetDB.value) {
             await interaction.message.edit({ components: [cancelDisabled] });
             return await interaction.reply({ content: coinflipLowBloods, ephemeral: true });
         }
@@ -67,27 +67,27 @@ new Component({
         if (getBetDB.side === `coinflip${randomSide}`) {
             const valueRate = Math.round(getBetDB.value * 0.05);
 
-            await database.memberBloods.add(`${getBetDB.userSendId}.bloods`, getBetDB.value - valueRate);
+            await database.profile.addBloods(getBetDB.userSendId, getBetDB.value - valueRate);
 
-            await database.memberBloods.sub(`${getBetDB.userReceivedId}.bloods`, getBetDB.value);
+            await database.profile.subBloods(getBetDB.userReceivedId, getBetDB.value);
 
             await interaction.message.reply({
                 content: coinflipWinMessage(getBetDB.userSendId, getBetDB.userReceivedId, emojiCoinflip, randomSide, getBetDB.value, valueRate),
             });
 
-            await database.coinflip.delete(messageId);
+            await database.profile.pullCoinflip(messageId);
         } else {
             const valueRate = Math.round(getBetDB.value * 0.05);
 
-            await database.memberBloods.add(`${getBetDB.userReceivedId}.bloods`, getBetDB.value - valueRate);
+            await database.profile.addBloods(getBetDB.userReceivedId, getBetDB.value - valueRate);
 
-            await database.memberBloods.sub(`${getBetDB.userSendId}.bloods`, getBetDB.value);
+            await database.profile.subBloods(getBetDB.userSendId, getBetDB.value);
 
             await interaction.message.reply({
                 content: coinflipWinMessage(getBetDB.userReceivedId, getBetDB.userSendId, emojiCoinflip, randomSide, getBetDB.value, valueRate),
             });
 
-            await database.coinflip.delete(messageId);
+            await database.profile.pullCoinflip(messageId);
         }
         return;
     },
@@ -101,7 +101,7 @@ new Component({
     async run(interaction) {
         const userId = interaction.user.id;
         const messageId = interaction.message.id;
-        const getBetDB = await database.coinflip.get(messageId);
+        const getBetDB = await database.profile.getCoinflip(messageId);
 
         // Verifica se o usuário que interagiu com o botão é o mesmo que está participando da aposta
         if (userId !== getBetDB?.userSendId && userId !== getBetDB?.userReceivedId) return await interaction.reply({ content: coinflipNotUserBet, ephemeral: true });
@@ -116,7 +116,7 @@ new Component({
             })
         );
 
-        await database.coinflip.delete(messageId);
+        await database.profile.pullCoinflip(messageId);
 
         return await interaction.update({ components: [cancelDisabled] });
     },

@@ -9,7 +9,7 @@ new Command({
     defaultMemberPermissions: ["Administrator"],
     type: ApplicationCommandType.ChatInput,
     async run(interaction) {
-        await database.commandTimer.deleteAll();
+        await database.commandCooldown.deleteMany();
 
         return await interaction.reply({ content: "Todos os cooldowns dos comandos da Nea foram reiniciados com sucesso.", ephemeral: true });
     },

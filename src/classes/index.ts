@@ -1,2 +1,2 @@
-//* Timer
-export * from "./CommandTimer/CommandTimer.js";
+// Timer
+export * from "./Cooldown/CommandCooldown.js";

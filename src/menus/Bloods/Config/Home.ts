@@ -1,8 +1,9 @@
+import { database } from "#database";
 import { embedBloodsConfig } from "#messages";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle } from "discord.js";
 
-export function bloodsHomeMenu(getChannelDB: any) {
+export async function bloodsHomeMenu() {
     const rowButton = createRow(
         new ButtonBuilder({
             customId: "button/bloods/configurações/inicio",
@@ -34,8 +35,14 @@ export function bloodsHomeMenu(getChannelDB: any) {
         })
     );
 
+    const guildId = await database.guild.getGuildId("Dead by Daylight Brasil");
+    let guildName = "Sem Servidor";
+    if (guildId) guildName = await database.guild.getGuildName(guildId);
+    const getTextChannels = await database.guild.getTextChannels(guildId);
+    const getVoiceChannels = await database.guild.getVoiceChannels(guildId);
+
     return {
-        embeds: [embedBloodsConfig(getChannelDB)],
+        embeds: [embedBloodsConfig(guildId ?? "Sem ID", guildName, getTextChannels, getVoiceChannels)],
         components: [rowButton],
         ephemeral: true,
     };

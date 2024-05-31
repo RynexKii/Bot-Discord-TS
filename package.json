@@ -1,55 +1,61 @@
 {
-  "name": "bot-discord-ts",
-  "type": "module",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsx --env-file .env ./src/index.ts",
-    "dev:dev": "tsx --env-file .env.development ./src/index.ts",
-    "watch": "tsx --watch --env-file .env ./src/index.ts",
-    "watch:dev": "tsx --watch --env-file .env.development ./src/index.ts",
-    "start": "node --env-file .env .",
-    "start:dev": "node --env-file .env.development ."
-  },
-  "dependencies": {
-    "@magicyan/discord": "^1.0.22",
-    "chalk": "^5.3.0",
-    "consola": "^3.2.3",
-    "discord.js": "^14.14.1",
-    "fast-glob": "^3.3.2",
-    "zod": "^3.22.4",
-    "better-sqlite3": "^9.2.2",
-    "quick.db": "^9.1.7"
-  },
-  "devDependencies": {
-    "@types/node": "^20.11.30",
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@typescript-eslint/parser": "^6.21.0",
-    "eslint": "^8.57.0",
-    "tsx": "^4.7.1",
-    "typescript": "^5.4.2"
-  },
-  "imports": {
-    "#base": [
-      "./dist/discord/base/index.js"
-    ],
-    "#settings": [
-      "./dist/settings/index.js"
-    ],
-    "#database": [
-      "./dist/database/index.js"
-    ],
-    "#functions": [
-      "./dist/functions/index.js"
-    ],
-    "#classes": [
-      "./dist/classes/index.js"
-    ],
-    "#tools": [
-      "./dist/tools/index.js"
-    ],
-    "#menus": [
-      "./dist/menus/index.js"
-    ]
-  }
+    "name": "bot-discord-ts",
+    "type": "module",
+    "main": "dist/index.js",
+    "scripts": {
+        "build:dev": "tsc --noEmit && echo ✔ Ok",
+        "build": "tsc",
+        "dev": "tsx --env-file .env ./src/index.ts",
+        "dev:dev": "tsx --env-file .env.development ./src/index.ts",
+        "watch": "tsx --watch --env-file .env ./src/index.ts",
+        "watch:dev": "tsx --watch --env-file .env.development ./src/index.ts",
+        "start": "node --env-file .env ./dist/index.js",
+        "start:dev": "node --env-file .env.development ./dist/index.js"
+    },
+    "dependencies": {
+        "@magicyan/discord": "^1.0.31",
+        "chalk": "^5.3.0",
+        "consola": "^3.2.3",
+        "discord.js": "^14.15.2",
+        "fast-glob": "^3.3.2",
+        "zod": "^3.23.7",
+        "mongoose": "^8.3.1"
+    },
+    "devDependencies": {
+        "@types/node": "^20.12.11",
+        "@typescript-eslint/eslint-plugin": "^6.21.0",
+        "@typescript-eslint/parser": "^6.21.0",
+        "eslint": "^8.57.0",
+        "tsx": "^4.9.3",
+        "typescript": "^5.4.5"
+    },
+    "imports": {
+        "#base": [
+            "./dist/discord/base/index.js"
+        ],
+        "#settings": [
+            "./dist/settings/index.js"
+        ],
+        "#database": [
+            "./dist/database/index.js"
+        ],
+        "#functions": [
+            "./dist/functions/index.js"
+        ],
+        "#classes": [
+            "./dist/classes/index.js"
+        ],
+        "#tools": [
+            "./dist/tools/index.js"
+        ],
+        "#menus": [
+            "./dist/menus/index.js"
+        ],
+        "#messages": [
+            "./dist/messages/index.js"
+        ],
+        "#lang/*": [
+            "./lang/*"
+        ]
+    }
 }

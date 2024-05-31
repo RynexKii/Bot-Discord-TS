@@ -15,36 +15,27 @@ export const embedRemoveButton = createEmbed({
 
 //* ---------- Funções Mensagens Embed ----------
 
-export function embedBloodsConfig(channelsIdDB: any) {
-    let guildId = "Sem ID";
-    let guildName = "Sem Servidor";
-    let textChannel = "**Sem canal**";
-    let voiceChannel = "**Sem canal**";
+export function embedBloodsConfig(guildId: string, guildName: string, textChannels: string[] | string, voiceChannels: string[] | string) {
+    let textChannel: string = "";
+    let voiceChannel: string = "";
 
-    if (channelsIdDB) {
-        if (channelsIdDB.guildId && channelsIdDB.guildId.length > 0) {
-            guildId = "";
-            guildId = channelsIdDB.guildId[0];
-        }
+    if (Array.isArray(textChannels)) {
+        if (textChannels.length == 0) textChannel = "**Sem canal**";
+        textChannels.forEach((element) => {
+            return (textChannel += `<#${element}> `);
+        });
+    }
 
-        if (channelsIdDB.guildName && channelsIdDB.guildName.length > 0) {
-            guildName = "";
-            guildName = channelsIdDB.guildName[0];
-        }
+    if (Array.isArray(voiceChannels)) {
+        if (voiceChannels.length == 0) voiceChannel = "**Sem canal**";
+        voiceChannels.forEach((element) => {
+            return (voiceChannel += `<#${element}> `);
+        });
+    }
 
-        if (channelsIdDB.textChannels && channelsIdDB.textChannels.length > 0) {
-            textChannel = "";
-            channelsIdDB.textChannels.forEach((element: any) => {
-                return (textChannel += `<#${element}> `);
-            });
-        }
-
-        if (channelsIdDB.voiceChannels && channelsIdDB.voiceChannels.length > 0) {
-            voiceChannel = "";
-            channelsIdDB.voiceChannels.forEach((element: any) => {
-                return (voiceChannel += `<#${element}> `);
-            });
-        }
+    if (textChannels == "Sem Canal" && voiceChannels == "Sem Canal") {
+        textChannel = "**Sem canal**";
+        voiceChannel = "**Sem canal**";
     }
 
     return createEmbed({

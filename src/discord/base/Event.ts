@@ -3,9 +3,7 @@ import chalk from "chalk";
 import { Client, ClientEvents, Collection } from "discord.js";
 
 interface EventData<EventName extends keyof ClientEvents> {
-    name: string;
-    event: EventName;
-    once?: boolean;
+    name: string; event: EventName; once?: boolean;
     run(...args: ClientEvents[EventName]): void
 }
 
@@ -37,7 +35,7 @@ export class Event<EventName extends keyof ClientEvents> {
         for(const events of Event.Events.values()){
 
             events.forEach(({ name }) => {
-                log.success(chalk.green(`${chalk.yellow.underline(name)} event registered successfully!`));
+                log.success(chalk.green(`${chalk.yellow.underline(name)} event loaded successfully!`));
             });
         }
     }

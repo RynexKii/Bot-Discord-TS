@@ -11,9 +11,7 @@ new Component({
     type: ComponentType.Button,
     cache: "cached",
     async run(interaction) {
-        const getChannelDB = await database.channelBloodsIgnored.get("GuildConfig");
-
-        await interaction.update(bloodsHomeMenu(getChannelDB));
+        await interaction.update(await bloodsHomeMenu());
     },
 });
 
@@ -40,19 +38,18 @@ new Component({
             })
         );
 
-        const { guildId } = interaction;
-
-        const getGuildDB = await database.channelBloodsIgnored.get<string[]>("GuildConfig.guildId");
+        const guildId = interaction.guildId;
+        const getGuildIdDB = await database.guild.getGuildId("Dead by Daylight Brasil");
 
         // Verificação se não existe ainda um Servidor Principal Adicionado
-        if (!getGuildDB || getGuildDB.length === 0)
+        if (getGuildIdDB == "Sem ID")
             return await interaction.reply({
                 content: "Você precisa antes usar o botão `Adicionar Servidor` para tornar este o `Servidor Principal` do sistema de `Bloods`!",
                 ephemeral: true,
             });
 
         // Verificação se o Servidor que foi chamado o comando for diferente do Servidor Principal
-        if (getGuildDB[0] !== guildId)
+        if (getGuildIdDB !== guildId)
             return await interaction.reply({
                 content: "Você não pode usar esse comando em um servidor diferente do `Servidor Principal`",
                 ephemeral: true,
@@ -85,28 +82,26 @@ new Component({
             })
         );
 
-        const { guildId } = interaction;
-
-        const getAllChannelsDB = await database.channelBloodsIgnored.get<string[]>("GuildConfig.allChannels");
-
-        const getGuildDB = await database.channelBloodsIgnored.get<string[]>("GuildConfig.guildId");
+        const guildId = interaction.guildId;
+        const getAllChannelsDB = await database.guild.getAllChannels(guildId);
+        const getGuildIdDB = await database.guild.getGuildId("Dead by Daylight Brasil");
 
         // Verificação se não existe ainda um Servidor Principal Adicionado
-        if (!getGuildDB || getGuildDB.length === 0)
+        if (getGuildIdDB == "Sem ID")
             return await interaction.reply({
                 content: "Você precisa antes usar o botão `Adicionar Servidor` para tornar este o `Servidor Principal` do sistema de `Bloods`!",
                 ephemeral: true,
             });
 
         // Verificação se o Servidor que foi chamado o comando for diferente do Servidor Principal
-        if (getGuildDB[0] !== guildId)
+        if (getGuildIdDB !== guildId)
             return await interaction.reply({
                 content: "Você não pode usar esse comando em um servidor diferente do `Servidor Principal`",
                 ephemeral: true,
             });
 
         // Verificação caso não exista nenhum canal registrado no Banco de Dados
-        if (!getAllChannelsDB || getAllChannelsDB.length === 0) return await interaction.reply({ content: contentNotAllChannels, ephemeral: true });
+        if (getAllChannelsDB == "Sem Canal" || getAllChannelsDB.length === 0) return await interaction.reply({ content: contentNotAllChannels, ephemeral: true });
 
         return await interaction.update({ embeds: [embedRemoveButton], components: [rowChannelSelect, rowButtonHome] });
     },

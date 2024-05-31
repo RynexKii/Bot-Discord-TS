@@ -56,24 +56,20 @@ new Component({
             })
         );
 
-        const { guildId } = interaction;
-
+        const guildId = interaction.guildId;
         const guildName = interaction.guild.name;
-
-        const getGuildDB = await database.channelBloodsIgnored.get<string[]>("GuildConfig.guildName");
+        const getGuildIdDB = await database.guild.getGuildId("Dead by Daylight Brasil");
 
         // Verifica se existe um servidor já registrado no banco de dados
-        if (getGuildDB && getGuildDB.length > 0) return await interaction.reply({ content: contentAlreadyGuild, ephemeral: true });
+        if (getGuildIdDB === guildId || getGuildIdDB !== "Sem ID") return await interaction.reply({ content: contentAlreadyGuild, ephemeral: true });
 
-        await database.channelBloodsIgnored.push("GuildConfig.guildName", guildName);
-
-        await database.channelBloodsIgnored.push("GuildConfig.guildId", guildId);
+        await database.guild.setGuildId("Dead by Daylight Brasil", guildId);
 
         return await interaction.update({ embeds: [embedGuildAdd(guildName)], components: [rowButtonHome] });
     },
 });
 
-// Interação com o Botão Remover dentro da interação de Adiocionar Guild
+// Interação com o Botão Remover dentro da interação de Adicionar Guild
 new Component({
     customId: "button/bloods/configurações/remover/guild",
     type: ComponentType.Button,
@@ -88,22 +84,18 @@ new Component({
             })
         );
 
-        const { guildId } = interaction;
-
+        const guildId = interaction.guildId;
         const guildName = interaction.guild.name;
-
-        const getGuildIdDB = await database.channelBloodsIgnored.get<string[]>("GuildConfig.guildId");
-
-        const getGuildNameDB = await database.channelBloodsIgnored.get<string[]>("GuildConfig.guildName");
+        const getGuildIdDB = await database.guild.getGuildId("Dead by Daylight Brasil");
+        const getGuildNameDB = await database.guild.getGuildName(getGuildIdDB);
 
         // Verifica se ainda não existe um servidor principal no Banco de Dados
-        if (!getGuildIdDB || !getGuildNameDB) return await interaction.reply({ content: contentNotGuildRegistered, ephemeral: true });
+        if (getGuildIdDB == "Sem ID" || getGuildNameDB == "Sem Servidor") return await interaction.reply({ content: contentNotGuildRegistered, ephemeral: true });
 
         // Verifica se o servidor que o comando está sendo executado é o mesmo que o registrado no Banco de Dados
-        if (getGuildIdDB[0] !== guildId)
-            return interaction.reply({ content: contentIncorrectGuild(getGuildNameDB[0], getGuildIdDB[0]), ephemeral: true });
+        if (getGuildIdDB !== guildId) return interaction.reply({ content: contentIncorrectGuild(getGuildNameDB, getGuildIdDB), ephemeral: true });
 
-        await database.channelBloodsIgnored.deleteAll();
+        await database.guild.deleteMany();
 
         return await interaction.update({ embeds: [embedGuildRemove(guildName)], components: [rowButtonHome] });
     },

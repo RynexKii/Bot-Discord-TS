@@ -12,7 +12,7 @@ new Command({
     type: ApplicationCommandType.ChatInput,
     async run(interaction) {
         const userId = interaction.user.id;
-        const getDateUserDB = await database.memberProfile.get<number>(`${userId}.dailyDate`);
+        const getDateUserDB = await database.profile.getDailyTimestamp(userId);
 
         // Verifica se o canal que foi executado o comando é o mesmo que está no sendCommandsChannel
         if (interaction.channelId !== channelSendCommandsId)
@@ -28,15 +28,16 @@ new Command({
         // Adicionar um dia
         nextDayDate.setDate(nextDayDate.getDate() + 1);
 
+
         // Definir as horas, minutos, segundos e milissegundos para 00:00
         nextDayDate.setHours(0, 0, 0, 0);
 
         async function collectDaily() {
             const randomBloods = randomNumber(50, 200);
 
-            await database.memberProfile.set(`${userId}.dailyDate`, nextDayDate.getTime());
+            await database.profile.setDailyTimestamp(userId, nextDayDate.getTime());
 
-            await database.memberBloods.add(`${userId}.bloods`, randomBloods);
+            await database.profile.addBloods(userId, randomBloods);
 
             return await interaction.reply({ embeds: [embedDailySend(userId, randomBloods)] });
         }
