@@ -1,6 +1,6 @@
 import { Component } from "#base";
 import { database } from "#database";
-import { contentAlreadyRole, contentInsufficientBloods, contentLogPublic, contentLogStaff, contentNotInteractCommand } from "#messages";
+import { contentAlreadyRole, contentInsufficientBloods, contentLogPublic, contentNotInteractCommand, embedLogBuyActiveMember } from "#messages";
 import { walletShopActiveMember, walletShopActiveMemberBuy } from "#menus";
 import { channelCongratulationsPublic, channelLogStaff, roleActiveMember } from "#tools";
 import { ComponentType } from "discord.js";
@@ -56,7 +56,7 @@ new Component({
 
         // Logs da Staff
         if (getChannelLogStaff && getChannelLogStaff.isTextBased()) {
-            getChannelLogStaff.send(contentLogStaff(userId, getTimestamp3Day));
+            getChannelLogStaff.send({ embeds: [embedLogBuyActiveMember(userId, roleActiveMember, 3, getTimestamp3Day)] });
         }
 
         // Logs Public
@@ -115,7 +115,7 @@ new Component({
 
         // Logs da Staff
         if (getChannelLogStaff && getChannelLogStaff.isTextBased()) {
-            getChannelLogStaff.send(contentLogStaff(userId, getTimestamp7Day));
+            getChannelLogStaff.send({ embeds: [embedLogBuyActiveMember(userId, roleActiveMember, 7, getTimestamp7Day)] });
         }
 
         // Logs Public
@@ -174,7 +174,7 @@ new Component({
 
         // Logs da Staff
         if (getChannelLogStaff && getChannelLogStaff.isTextBased()) {
-            getChannelLogStaff.send(contentLogStaff(userId, getTimestamp30Day));
+            getChannelLogStaff.send({ embeds: [embedLogBuyActiveMember(userId, roleActiveMember, 30, getTimestamp30Day)] });
         }
 
         // Logs Public

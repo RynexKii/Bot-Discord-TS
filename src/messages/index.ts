@@ -1,6 +1,11 @@
-export * from "./Profile/About/contentAbout.js";
 // Cooldown Commands Message
 export * from "./Cooldown/Cooldown.js";
+
+// Logs Message
+export * from "./Logs/EmbedActiveMember.js";
+
+// Profile
+export * from "./Profile/About/contentAbout.js";
 
 // Config Message
 export * from "./Config/Config.js";

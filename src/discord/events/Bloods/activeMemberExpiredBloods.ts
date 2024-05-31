@@ -1,6 +1,6 @@
 import { Event } from "#base";
 import { database } from "#database";
-import { contentLogStaffRemove } from "#messages";
+import { embedLogExpiredActiveMember } from "#messages";
 import { channelLogStaff, roleActiveMember } from "#tools";
 
 new Event({
@@ -49,7 +49,7 @@ new Event({
 
                         // Logs da Staff
                         if (getChannelLogStaff && getChannelLogStaff.isTextBased()) {
-                            getChannelLogStaff.send(contentLogStaffRemove(userId));
+                            getChannelLogStaff.send({ embeds: [embedLogExpiredActiveMember(userId, roleActiveMember)]});
                         }
                     }
                 }
