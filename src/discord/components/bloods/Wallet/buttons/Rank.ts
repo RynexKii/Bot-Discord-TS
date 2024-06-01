@@ -2,7 +2,7 @@ import { Component } from "#base";
 import { database } from "#database";
 import { contentNotInteractCommand, embedWalletRank } from "#messages";
 import { createRow } from "@magicyan/discord";
-import { ButtonBuilder, ButtonStyle, ComponentType } from "discord.js";
+import { ButtonBuilder, ButtonStyle, ComponentType, inlineCode, userMention } from "discord.js";
 
 // Botão para acessar o Top Rank
 new Component({
@@ -23,11 +23,14 @@ new Component({
         );
 
         const userId = interaction.user.id;
-
         const getAllUsersRankDB = await database.profile.find().sort({ bloodsRank: 1 });
-
         const getFirstFiveUsers = getAllUsersRankDB?.slice(0, 10);
+        let textRank = "";
 
-        return await interaction.update(embedWalletRank(userId, getFirstFiveUsers, rowButton));
+        getFirstFiveUsers.forEach((user) => {
+            textRank += `${user.bloodsRank}º <@${user.userId}> ` + inlineCode(`ﾠ${user.bloods} Bloods 🩸\n`);
+        });
+
+        return await interaction.update({ content: userMention(userId), embeds: [embedWalletRank(textRank)], components: [rowButton] });
     },
 });

@@ -1,4 +1,4 @@
-import { EmbedBuilder, inlineCode } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { wrapText } from "#functions";
 
 //* ---------- Variáveis Mensagens Embed ----------
@@ -97,21 +97,10 @@ export function embedWalletUsers(
         .setColor("Random");
 }
 
-export function embedWalletRank(userId: string, membersRank: any[] | undefined, rowButton: any) {
-    let textRank = "";
+export function embedWalletRank(usersRanks: string) {
 
-    if (membersRank && membersRank?.length > 0) {
-        membersRank.forEach((element) => {
-            textRank += `${element.userRank}º <@${element.userId}> ` + inlineCode(`ﾠ${element.userBloods} Bloods 🩸\n`);
-        });
-    } else {
-        textRank = "* [ERRO] Não foi possível encontrar nenhum usuário no banco de dados.";
-    }
-
-    const embedWalletRank = new EmbedBuilder()
+    return new EmbedBuilder()
         .setAuthor({ name: "Top 10 Bloods", iconURL: "https://i.imgur.com/h0S883Y.png" })
-        .setDescription(`${textRank} \nO Rank é atualizado a cada intervalo de 1 minuto.`)
+        .setDescription(`${usersRanks}\nO Rank é atualizado a cada intervalo de 1 minuto.`)
         .setColor("DarkGold");
-
-    return { content: `<@${userId}>`, embeds: [embedWalletRank], components: [rowButton] };
 }
