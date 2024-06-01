@@ -49,7 +49,7 @@ new Command({
             const allUsersRanksDB = (await database.profile.find()).length;
 
             if (!userReceiverId || userId == userReceiverId) {
-                return await interaction.reply(bloodsWalletMenu(userName, userIcon, userBloodsDB, userAboutDB, userFameDB, userRankDB, allUsersRanksDB));
+                return await interaction.reply(bloodsWalletMenu(userId, userName, userIcon, userBloodsDB, userAboutDB, userFameDB, userRankDB, allUsersRanksDB));
             } else {
                 return await interaction.reply(bloodsWalletMenuUsers(userName, userIcon, userBloodsDB, userAboutDB, userFameDB, userRankDB, allUsersRanksDB));
             }

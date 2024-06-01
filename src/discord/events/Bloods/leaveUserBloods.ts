@@ -7,9 +7,9 @@ new Event({
     async run(interaction) {
         const userId = interaction.user.id;
         const guildId = interaction.guild.id;
-        const guildIdDB = await database.guild.getGuildId("Dead by Daylight Brasil");
+        const getGuildIdDB = await database.guild.getGuildId();
 
-        if (!guildIdDB || guildIdDB && guildId !== guildIdDB) return;
+        if (!getGuildIdDB || (getGuildIdDB && guildId !== getGuildIdDB)) return;
 
         await database.profile.deleteProfile(userId);
     },

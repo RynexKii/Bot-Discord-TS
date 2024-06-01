@@ -22,6 +22,6 @@ new Component({
         const userRankDB = await database.profile.getRank(userId);
         const allUsersRanksDB = (await database.profile.find()).length;
 
-        return await interaction.update(bloodsWalletMenu(userName, userIcon, userBloodsDB, userAboutDB, userFameDB, userRankDB, allUsersRanksDB));
+        return await interaction.update(bloodsWalletMenu(userId, userName, userIcon, userBloodsDB, userAboutDB, userFameDB, userRankDB, allUsersRanksDB));
     },
 });

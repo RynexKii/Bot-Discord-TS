@@ -1,8 +1,9 @@
 import { embedWallet, embedWalletUsers } from "#messages";
 import { createRow } from "@magicyan/discord";
-import { ButtonBuilder, ButtonStyle } from "discord.js";
+import { ButtonBuilder, ButtonStyle, userMention } from "discord.js";
 
 export function bloodsWalletMenu(
+    userId: string,
     userName: string,
     userIcon: string,
     userBloods: number,
@@ -42,7 +43,11 @@ export function bloodsWalletMenu(
         })
     );
 
-    return { embeds: [embedWallet(userName, userIcon, userBloods, userAboutMe, userFame, userRank, allUsersRank)], components: [rowButton] };
+    return {
+        content: `${userMention(userId)}`,
+        embeds: [embedWallet(userName, userIcon, userBloods, userAboutMe, userFame, userRank, allUsersRank)],
+        components: [rowButton],
+    };
 }
 
 export function bloodsWalletMenuUsers(

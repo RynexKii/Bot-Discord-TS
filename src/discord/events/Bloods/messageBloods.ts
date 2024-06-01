@@ -7,12 +7,16 @@ new Event({
     event: "messageCreate",
     async run(interaction) {
         const userId = interaction.author.id;
-        //!Ativar dps
-        // const channelId = interaction.channelId;
-        // const getAllChannelsDB = await database.guild.getAllChannels("Dead by Daylight Brasil");
+        const channelId = interaction.channelId;
+        const guildId = interaction.guildId;
+        const getGuildIdDB = await database.guild.getGuildId();
 
-        // // Verificação dos canais que não concederão Bloods
-        // if (getAllChannelsDB && getAllChannelsDB.includes(channelId)) return;
+        if (!getGuildIdDB || getGuildIdDB !== guildId) return;
+
+        const getAllChannelsDB = await database.guild.getAllChannels(getGuildIdDB);
+
+        // Verificação dos canais que não concederão Bloods
+        if (getAllChannelsDB && getAllChannelsDB.includes(channelId)) return;
 
         // Verifica se a mensagem foi enviada no privado do bot
         if (interaction.channel.isDMBased()) return;

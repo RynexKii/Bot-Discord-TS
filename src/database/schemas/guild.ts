@@ -2,8 +2,8 @@ import { Schema } from "mongoose";
 
 export const guildSchema = new Schema(
     {
-        guildName: { type: String, required: true },
         guildId: { type: String, required: true },
+        guildName: { type: String, required: true },
         channelsIgnored: {
             allChannels: { type: [String] },
             textChannels: { type: [String] },
@@ -17,41 +17,28 @@ export const guildSchema = new Schema(
     {
         versionKey: false,
         statics: {
-            // Obtêm o todos os dados da guild registrado
-            async getGuild(guildName: string) {
-                const query = { guildName: guildName };
+            // Seta uma guild
+            async setGuild(guildId: string, guildName: string) {
+                const query = { guildId: guildId, guildName: guildName };
+
                 return (await this.findOne(query)) ?? this.create(query);
+            },
+            // Obtêm o guildId registrado conforme o guildName passado
+            async getGuildId() {
+                const guild = await this.findOne();
+
+                if (!guild) return;
+
+                return guild.guildId;
             },
             // Obtêm o guildName registrado conforme o guildId passado
             async getGuildName(guildId: string) {
                 const query = { guildId: guildId };
-
                 const guild = await this.findOne(query);
 
                 if (!guild) return "Sem Servidor";
 
                 return guild.guildName;
-            },
-            // Obtêm o guildId registrado conforme o guildName passado
-            async getGuildId(guildName: string) {
-                const guild = await this.findOne({ guildName: guildName });
-
-                if (!guild) return "Sem ID";
-
-                return guild.guildId;
-            },
-            async setGuildId(guildName: string, guildId: string) {
-                const query = { guildName: guildName };
-                const guild = await this.findOne(query);
-
-                if (!guild) {
-                    this.create({ guildName: guildName, guildId: guildId });
-                    return guildId;
-                }
-
-                await guild.updateOne({ guildId: guildId });
-
-                return guildId;
             },
             // Seta um novo timestamp a um usuário conforme o commandId passado
             async setTimestamp(userId: string, commandId: string, timestamp: number) {
@@ -71,7 +58,7 @@ export const guildSchema = new Schema(
             async getAllChannels(guildId: string) {
                 const guild = await this.findOne({ guildId: guildId });
 
-                if (!guild || !guild.channelsIgnored) return "Sem Canal";
+                if (!guild || !guild.channelsIgnored || !guild.channelsIgnored.allChannels.length) return;
 
                 return guild.channelsIgnored.allChannels;
             },
@@ -96,13 +83,19 @@ export const guildSchema = new Schema(
                 await guild.updateOne({ $pull: { "channelsIgnored.allChannels": channelId } });
                 return;
             },
-            // Obtêm todos os canais de texto registrado
-            async getTextChannels(guildId: string) {
+            // Obtêm todos os canais de texto registrado e devolve no formato de menção do Discord
+            async getTextChannels(guildId: string): Promise<string | undefined> {
                 const guild = await this.findOne({ guildId: guildId });
 
-                if (!guild || !guild.channelsIgnored) return "Sem Canal";
+                if (!guild || !guild.channelsIgnored || !guild.channelsIgnored.textChannels.length) return;
 
-                return guild.channelsIgnored.textChannels;
+                let textChannels = "";
+
+                guild.channelsIgnored.textChannels.forEach((channels) => {
+                    textChannels += `<#${channels}> `;
+                });
+
+                return textChannels;
             },
             // Adiciona no Array(textChannels) um novo canal
             async pushTextChannels(guildId: string, channelId: string) {
@@ -125,13 +118,19 @@ export const guildSchema = new Schema(
                 await guild.updateOne({ $pull: { "channelsIgnored.textChannels": channelId } });
                 return;
             },
-            // Obtêm todos os canais de voice registrado
+            // Obtêm todos os canais de voice registrado e devolve no formato de menção do Discord
             async getVoiceChannels(guildId: string) {
                 const guild = await this.findOne({ guildId: guildId });
 
-                if (!guild || !guild.channelsIgnored) return "Sem Canal";
+                if (!guild || !guild.channelsIgnored || !guild.channelsIgnored.voiceChannels.length) return;
 
-                return guild.channelsIgnored.voiceChannels;
+                let voiceChannels = "";
+
+                guild.channelsIgnored.voiceChannels.forEach((channels) => {
+                    voiceChannels += `<#${channels}> `;
+                });
+
+                return voiceChannels;
             },
             // Adiciona no Array(voiceChannels) um novo canal
             async pushVoiceChannels(guildId: string, channelId: string) {

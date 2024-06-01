@@ -8,7 +8,8 @@ export * from "./Logs/EmbedActiveMember.js";
 export * from "./Profile/About/contentAbout.js";
 
 // Config Message
-export * from "./Config/Config.js";
+export * from "./Config/ContentConfig.js";
+export * from "./Config/ContentConfigGuild.js";
 
 // Bloods Staff Message
 export * from "../messages/MessageEmbeds/BloodsMessageEmbeds/EmbedsStaff.js";

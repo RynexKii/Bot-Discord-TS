@@ -10,7 +10,7 @@ new Event({
         // Função para remover o cargo de Membro Ativo após 30 dias da compra
         async function removeActiveMember() {
             //! Integrar mais pra frente com o Banco de Dados
-            const guildIdDB = await database.guild.getGuildId("Dead by Daylight Brasil");
+            const guildIdDB = await database.guild.getGuildId();
 
             //! Integrar mais pra frente com o Banco de Dados
             // TODO: Colocar o ID do cargo de Membro Ativo

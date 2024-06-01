@@ -3,7 +3,7 @@ import { embedBloodsConfig } from "#messages";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle } from "discord.js";
 
-export async function bloodsHomeMenu() {
+export async function bloodsHomeMenu(botId: string) {
     const rowButton = createRow(
         new ButtonBuilder({
             customId: "button/bloods/configurações/inicio",
@@ -35,15 +35,16 @@ export async function bloodsHomeMenu() {
         })
     );
 
-    const guildId = await database.guild.getGuildId("Dead by Daylight Brasil");
-    let guildName = "Sem Servidor";
-    if (guildId) guildName = await database.guild.getGuildName(guildId);
-    const getTextChannels = await database.guild.getTextChannels(guildId);
-    const getVoiceChannels = await database.guild.getVoiceChannels(guildId);
+    const getGuildIdDB = (await database.guild.getGuildId()) ?? "Sem ID";
+    let getGuildNameDB = "Sem Servidor";
+    let getTextChannelsDB = "";
+    let getVoiceChannelsDB = "";
 
-    return {
-        embeds: [embedBloodsConfig(guildId ?? "Sem ID", guildName, getTextChannels, getVoiceChannels)],
-        components: [rowButton],
-        ephemeral: true,
-    };
+    if (getGuildIdDB) {
+        getGuildNameDB = await database.guild.getGuildName(getGuildIdDB);
+        getTextChannelsDB = (await database.guild.getTextChannels(getGuildIdDB)) ?? "`Sem Canal`";
+        getVoiceChannelsDB = (await database.guild.getVoiceChannels(getGuildIdDB)) ?? "`Sem Canal`";
+    }
+
+    return { embeds: [embedBloodsConfig(botId, getGuildIdDB, getGuildNameDB, getTextChannelsDB, getVoiceChannelsDB)], components: [rowButton], ephemeral: true };
 }

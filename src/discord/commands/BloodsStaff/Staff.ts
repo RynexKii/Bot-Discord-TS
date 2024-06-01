@@ -80,7 +80,8 @@ new Command({
 
                 switch (subCommand) {
                     case "configurações": {
-                        await interaction.reply(await bloodsHomeMenu());
+                        const botId = interaction.applicationId;
+                        await interaction.reply(await bloodsHomeMenu(botId));
                         break;
                     }
                     case "adicionar-remover": {

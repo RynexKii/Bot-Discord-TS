@@ -1,5 +1,5 @@
 import { createEmbed } from "@magicyan/discord";
-import { EmbedBuilder } from "discord.js";
+import { EmbedBuilder, userMention } from "discord.js";
 
 //* ---------- Variáveis Mensagens Embed ----------
 
@@ -15,42 +15,20 @@ export const embedRemoveButton = createEmbed({
 
 //* ---------- Funções Mensagens Embed ----------
 
-export function embedBloodsConfig(guildId: string, guildName: string, textChannels: string[] | string, voiceChannels: string[] | string) {
-    let textChannel: string = "";
-    let voiceChannel: string = "";
-
-    if (Array.isArray(textChannels)) {
-        if (textChannels.length == 0) textChannel = "**Sem canal**";
-        textChannels.forEach((element) => {
-            return (textChannel += `<#${element}> `);
-        });
-    }
-
-    if (Array.isArray(voiceChannels)) {
-        if (voiceChannels.length == 0) voiceChannel = "**Sem canal**";
-        voiceChannels.forEach((element) => {
-            return (voiceChannel += `<#${element}> `);
-        });
-    }
-
-    if (textChannels == "Sem Canal" && voiceChannels == "Sem Canal") {
-        textChannel = "**Sem canal**";
-        voiceChannel = "**Sem canal**";
-    }
-
+export function embedBloodsConfig(botId: string, guildId: string, guildName: string, textChannels: string, voiceChannels: string) {
     return createEmbed({
-        author: { name: "Configurações de Canais", iconURL: "https://i.imgur.com/bb3OIny.png" },
+        author: { name: "Painel de configurações", iconURL: "https://i.imgur.com/7RV9fMq.png" },
         description: `  
-Configure os canais onde as atividades dos Bloods não serão consideradas para acumulação de pontos.
-        
-* Servidor registrado no Banco de Dados
+Bem vindo(a) ao painel de configurações do app ${userMention(botId)}
+
+* Servidor Principal Registrado
  * Servidor: **${guildName} (${guildId})**
 
-* Canais registrado no Banco de Dados
- * Canais de Texto: ${textChannel}
- - Canais de Voz: ${voiceChannel}
+* Canais que não receberão Bloods
+ * Canais de Texto: ${textChannels}
+ * Canais de Voz: ${voiceChannels}
 `,
-        color: "Yellow",
+        color: "White",
     });
 }
 

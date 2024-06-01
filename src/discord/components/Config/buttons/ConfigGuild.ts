@@ -1,6 +1,6 @@
 import { Component } from "#base";
 import { database } from "#database";
-import { contentAlreadyGuild, contentIncorrectGuild, contentNotGuildRegistered, embedGuildAdd, embedGuildConfig, embedGuildRemove } from "#messages";
+import { contentAlreadyMainGuild, contentIncorrectMainGuild, contentNotMainGuildRegistered, embedGuildAdd, embedGuildConfig, embedGuildRemove } from "#messages";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle, ComponentType } from "discord.js";
 
@@ -33,8 +33,7 @@ new Component({
             })
         );
 
-        const { guildId } = interaction;
-
+        const guildId = interaction.guildId;
         const guildName = interaction.guild.name;
 
         await interaction.update({ embeds: [embedGuildConfig(guildName, guildId)], components: [rowButton] });
@@ -58,12 +57,12 @@ new Component({
 
         const guildId = interaction.guildId;
         const guildName = interaction.guild.name;
-        const getGuildIdDB = await database.guild.getGuildId("Dead by Daylight Brasil");
+        const getGuildIdDB = await database.guild.getGuildId();
 
         // Verifica se existe um servidor já registrado no banco de dados
-        if (getGuildIdDB === guildId || getGuildIdDB !== "Sem ID") return await interaction.reply({ content: contentAlreadyGuild, ephemeral: true });
+        if (getGuildIdDB) return await interaction.reply({ content: contentAlreadyMainGuild, ephemeral: true });
 
-        await database.guild.setGuildId("Dead by Daylight Brasil", guildId);
+        await database.guild.setGuild(guildId, guildName);
 
         return await interaction.update({ embeds: [embedGuildAdd(guildName)], components: [rowButtonHome] });
     },
@@ -86,14 +85,15 @@ new Component({
 
         const guildId = interaction.guildId;
         const guildName = interaction.guild.name;
-        const getGuildIdDB = await database.guild.getGuildId("Dead by Daylight Brasil");
-        const getGuildNameDB = await database.guild.getGuildName(getGuildIdDB);
+        const getGuildIdDB = await database.guild.getGuildId();
 
         // Verifica se ainda não existe um servidor principal no Banco de Dados
-        if (getGuildIdDB == "Sem ID" || getGuildNameDB == "Sem Servidor") return await interaction.reply({ content: contentNotGuildRegistered, ephemeral: true });
+        if (!getGuildIdDB) return await interaction.reply({ content: contentNotMainGuildRegistered, ephemeral: true });
+
+        const getGuildNameDB = await database.guild.getGuildName(getGuildIdDB);
 
         // Verifica se o servidor que o comando está sendo executado é o mesmo que o registrado no Banco de Dados
-        if (getGuildIdDB !== guildId) return interaction.reply({ content: contentIncorrectGuild(getGuildNameDB, getGuildIdDB), ephemeral: true });
+        if (getGuildIdDB !== guildId) return interaction.reply({ content: contentIncorrectMainGuild(getGuildNameDB, getGuildIdDB), ephemeral: true });
 
         await database.guild.deleteMany();
 

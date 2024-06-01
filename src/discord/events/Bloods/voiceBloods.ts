@@ -8,7 +8,7 @@ new Event({
     async run(client) {
         async function addBloodsVoiceChannel() {
             const allMembersGuild: string[] = [];
-            const getGuildIdDB = await database.guild.getGuildId("Dead by Daylight Brasil");
+            const getGuildIdDB = await database.guild.getGuildId();
 
             // Verifica se existe um guildId registrado no Banco de Dados
             if (!getGuildIdDB) return;
@@ -40,7 +40,7 @@ new Event({
                     // Uma segunda verificação se o usuário está conectado no canal do Servidor Principal
                     if (memberHasConnected) {
                         // Verifica se existe um canal registrado no Banco de Dados para ser ignorado
-                        if (getAllChannelsDB !== "Sem Canal") {
+                        if (getAllChannelsDB) {
                             // Verificação dos canais que não concederão Bloods
                             if (!getAllChannelsDB.includes(memberVoiceConnectedId)) {
                                 // Verifica se o usuário deu boost no Servidor
